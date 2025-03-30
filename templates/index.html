@@ -1,0 +1,26 @@
+<html>
+
+<head>
+  <title>Log in</title>
+</head>
+
+<body>
+    <h1> Welcome to Lost and found!</h1>
+  {% if session.username %}
+  <p>
+    You are logged in as {{ session.username }}
+  </p>
+  <p>
+    <a href="/logout">Log out</a>
+  </p>
+  {% else %}
+  <p> 
+    <a href="/login"> Login</a>
+    <a href="/register"> Sign in</a>
+    <a href="logout"> Log out</a>
+</p>
+  {% endif %}
+
+</body>
+
+</html>
