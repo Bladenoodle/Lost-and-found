@@ -8,7 +8,10 @@
     <h1> Welcome to Lost and found!</h1>
   {% if session.username %}
   <p>
-    You are logged in as {{ session.username }}
+    You are logged in as {{ session.username }} with id: {{session.user_id}}
+  </p>
+  <p>
+    <a href="/new_item">New item</a>
   </p>
   <p>
     <a href="/logout">Log out</a>
