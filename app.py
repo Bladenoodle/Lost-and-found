@@ -10,11 +10,13 @@ app.secret_key = config.secret_key
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    all_items = items.get_items()
+    return render_template("index.html", items = all_items)
 
 @app.route("/new_item")
 def new_item():
     return render_template("new_item.html")
+
 
 
 @app.route("/create_item", methods=["POST"])
@@ -26,6 +28,11 @@ def create_item():
     items.add_item(item_name, description, user_id)
 
     return redirect("/")
+
+@app.route("/item/<int:item_id>")
+def show_item(item_id):
+    item = items.get_item(item_id)
+    return render_template("show_item.html", item=item)
 
 @app.route("/register")
 def register():
