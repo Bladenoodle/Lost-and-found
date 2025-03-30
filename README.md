@@ -1,9 +1,10 @@
 # Lost and found
 
-* Käyttäjä pystyy luomaan tunnuksen ja kirjautumaan sisään sovellukseen.
-* Käyttäjä pystyy lisäämään sovellukseen löydetyn tai kadonneen tavaran tiedot. Lisäksi käyttäjä pystyy muokkaamaan ja poistamaan lisäämiään tavaratietoja.
-* Käyttäjä näkee sekä itse lisäämänsä että muiden käyttäjien lisäämät tavaratiedot.
-* Käyttäjä pystyy etsimään tavaratietoja hakusanalla tai muulla perusteella. Käyttäjä pystyy hakemaan sekä itse lisäämiään että muiden käyttäjien lisäämiä tavaratietoja.
-* Sovelluksessa on käyttäjäsivut, jotka näyttävät jokaisesta käyttäjästä tilastoja ja käyttäjän lisäämät tavaratiedot.
-* Käyttäjä pystyy valitsemaan tavaratiedolle yhden tai useamman luokittelun (esim. löytynyt/kadonnut, penaali, sininen).
-* Käyttäjä pystyy ilmoittamaan löydetyn tavaran itselleen tai kadonnen tavaran löytyneeksi. 
+* The user can create an account and log into the application.
+* The user can add information about found or lost items to the application. The user can edit and delete the item information they have added.
+* The user can view both the items they have added and the items added by other users.
+* The user can search for item information by keyword or other criteria. The user can search for both the items they have added and those added by other users.
+* The application has user pages that show statistics for each user and the item information they have added.
+* The user can assign one or more categories to an item (e.g. found/lost, pencil case, blue).
+* The user can claim a found item as their own or a lost item as found.
+
