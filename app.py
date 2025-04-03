@@ -5,13 +5,13 @@ import config
 import db
 import items
 
-app = Flask(__name__)
-app.secret_key = config.secret_key
+app=Flask(__name__)
+app.secret_key=config.secret_key
 
 @app.route("/")
 def index():
-    all_items = items.get_items()
-    return render_template("index.html", items = all_items)
+    all_items=items.get_items()
+    return render_template("index.html", items=all_items)
 
 @app.route("/new_item")
 def new_item():
@@ -21,9 +21,9 @@ def new_item():
 
 @app.route("/create_item", methods=["POST"])
 def create_item():
-    item_name = request.form["item_name"] 
-    description = request.form["description"]
-    user_id = session["user_id"]
+    item_name=request.form["item_name"] 
+    description=request.form["description"]
+    user_id=session["user_id"]
 
     items.add_item(item_name, description, user_id)
 
@@ -31,7 +31,7 @@ def create_item():
 
 @app.route("/item/<int:item_id>")
 def show_item(item_id):
-    item = items.get_item(item_id)
+    item=items.get_item(item_id)
     return render_template("show_item.html", item=item)
 
 @app.route("/register")
@@ -40,15 +40,15 @@ def register():
 
 @app.route("/create", methods=["POST"])
 def create():
-    username = request.form["username"]
-    password1 = request.form["password1"]
-    password2 = request.form["password2"]
+    username=request.form["username"]
+    password1=request.form["password1"]
+    password2=request.form["password2"]
     if password1 != password2:
         return "VIRHE: Passwords do not match"
-    password_hash = generate_password_hash(password1)
+    password_hash=generate_password_hash(password1)
 
     try:
-        sql = "INSERT INTO users (username, password_hash) VALUES (?, ?)"
+        sql="INSERT INTO users (username, password_hash) VALUES (?, ?)"
         db.execute(sql, [username, password_hash])
     except sqlite3.IntegrityError:
         return "VIRHE: Username is occupied"
@@ -61,17 +61,17 @@ def login():
     if request.method == "GET":
         return render_template("login.html")
     if request.method == "POST":
-        username = request.form["username"]
-        password = request.form["password"]
+        username=request.form["username"]
+        password=request.form["password"]
 
-        sql = "SELECT id, password_hash FROM users WHERE username = ?"
-        result = db.query(sql, [username])[0]
-        user_id = result["id"]
-        password_hash = result["password_hash"]
+        sql="SELECT id, password_hash FROM users WHERE username=?"
+        result=db.query(sql, [username])[0]
+        user_id=result["id"]
+        password_hash=result["password_hash"]
 
         if check_password_hash(password_hash, password):
-            session["user_id"] = user_id
-            session["username"] = username
+            session["user_id"]=user_id
+            session["username"]=username
             return redirect("/")
         else:
             return "VIRHE: väärä tunnus tai salasana"
