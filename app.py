@@ -21,9 +21,10 @@ def new_item():
 def create_item():
     item_name=request.form["item_name"] 
     description=request.form["description"]
+    status=request.form["status"]
     user_id=session["user_id"]
 
-    items.add_item(item_name, description, user_id)
+    items.add_item(item_name, description, status, user_id)
 
     return redirect("/")
 

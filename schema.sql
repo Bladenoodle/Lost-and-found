@@ -8,5 +8,6 @@ CREATE TABLE items (
     id INTEGER PRIMARY KEY,
     item_name TEXT UNIQUE,
     description TEXT,
+    status TEXT,
     user_id INTEGER REFERENCES users
 );

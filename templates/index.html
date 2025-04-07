@@ -25,10 +25,11 @@
 <h2> Posts </h2>
 <ul>
   {%for item in items%}
-  <li><a href="/item/{{item.id}}"> {{item.item_name}} </li>
+  <li>
+    <a href="/item/{{item.id}}">{{item.item_name}} ({{item.status}})</a>
+  </li>
   {% endfor %}
 </ul>
-
 
 </body>
 
