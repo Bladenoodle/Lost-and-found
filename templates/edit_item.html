@@ -1,0 +1,28 @@
+<html>
+
+<head>
+  <title>Edit item</title>
+</head>
+
+<body>
+    <h1>Edit item</h1>
+  <form action="/update_item" method="post">
+    <p>
+      Item name: <br/>
+      <input type="text" name="item_name", value="{{ item.item_name}}"/>
+    </p>
+    <p>
+      Description:<br/>
+      <textarea name="description" rows="8", cols="60">{{ item.description }}</textarea>
+    </p>
+    <p>
+      Lost or found<br/>
+      <input type="radio" name="status" value="Lost" {% if item.status == "Lost" %} checked {% endif %} required/> Lost
+      <input type="radio" name="status" value="Found" {% if item.status == "Found" %} checked {% endif %}/> Found
+    </p>
+    <input type="hidden" name="item_id" value="{{item.id}}"/>
+    <input type="submit" value="Save"/>
+  </form>
+</body>
+
+</html>

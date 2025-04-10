@@ -6,6 +6,11 @@
 
 <body>
 <h1>{{item.item_name}} ({{item.status}})</h1>
+{% if session.user_id == item.user_id %}
+<p>
+    <a href="/edit_item/{{ item.id }}">Edit</a>
+</p>
+{% endif %}
 <p>
     {{item.description}}
 </p>
