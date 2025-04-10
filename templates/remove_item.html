@@ -1,0 +1,21 @@
+<html>
+
+<head>
+  <title>Remove item</title>
+</head>
+
+<body>
+    <h1>Remove item</h1>
+    <p>
+        Item name: <b>{{ item.item_name }}</b>
+    </p>
+    <p>
+        Are you sure you want to <b>remove this item permanently</b>?
+    </p>
+  <form action="/remove_item/{{ item.id }}" method="POST">
+    <input type="submit" name="remove" value="Confirm">
+    <input type="submit" name="cancel" value="Cancel">
+  </form>
+</body>
+
+</html>
