@@ -43,15 +43,16 @@ def create():
     password1=request.form["password1"]
     password2=request.form["password2"]
     if password1 != password2:
-        return "Error: Passwords do not match"
+        return render_template("401.html")
     password_hash=generate_password_hash(password1)
 
     try:
         sql="INSERT INTO users (username, password_hash) VALUES (?, ?)"
         db.execute(sql, [username, password_hash])
     except sqlite3.IntegrityError:
-        return "Error: Username is occupied"
-    return render_template("index.html")
+        return render_template("401.html")
+    all_items=items.get_items()
+    return render_template("index.html", items=all_items)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
