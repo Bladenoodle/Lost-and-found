@@ -8,7 +8,7 @@
     <h1> Welcome to Lost and found!</h1>
   {% if session.username %}
   <p>
-    You are logged in as {{ session.username }} with id: {{session.user_id}}
+    You are logged in as {{ session.username }} with id: {{ session.user_id }}
   </p>
   <p>
     <a href="/new_item">New item</a>
@@ -26,7 +26,7 @@
 <ul>
   {%for item in items%}
   <li>
-    <a href="/item/{{item.id}}">{{item.item_name}} ({{item.status}})</a>
+    <a href="/item/{{ item.id }}">{{ item.item_name }} ({{ item.status }})</a>
   </li>
   {% endfor %}
 </ul>

@@ -1,11 +1,11 @@
 <html>
 
 <head>
-  <title>{{item.item_name}}</title>
+  <title>{{ item.item_name }}</title>
 </head>
 
 <body>
-<h1>{{item.item_name}} ({{item.status}})</h1>
+<h1>{{ item.item_name }} ({{ item.status }})</h1>
 {% if session.user_id == item.user_id %}
 <p>
     <a href="/edit_item/{{ item.id }}">Edit</a>
@@ -13,10 +13,10 @@
 </p>
 {% endif %}
 <p>
-    {{item.description}}
+    {{ item.description }}
 </p>
 <p>
-    Uploader: {{item.username}}
+    Uploader: {{ item.username }}
 </p>
 <p>
     <a href="/"> Home page</a>

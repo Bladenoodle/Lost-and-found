@@ -9,7 +9,7 @@
   <form action="/update_item" method="POST">
     <p>
       Item name: <br/>
-      <input type="text" name="item_name", value="{{ item.item_name}}"/>
+      <input type="text" name="item_name", value="{{ item.item_name }}"/>
     </p>
     <p>
       Description:<br/>
@@ -20,7 +20,7 @@
       <input type="radio" name="status" value="Lost" {% if item.status == "Lost" %} checked {% endif %} required/> Lost
       <input type="radio" name="status" value="Found" {% if item.status == "Found" %} checked {% endif %}/> Found
     </p>
-    <input type="hidden" name="item_id" value="{{item.id}}"/>
+    <input type="hidden" name="item_id" value="{{ item.id }}"/>
     <input type="submit" value="Save"/>
   </form>
 </body>
