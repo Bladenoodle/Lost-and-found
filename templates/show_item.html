@@ -1,22 +1,22 @@
 <html>
 
 <head>
-  <title>{{item.item_name}}</title>
+  <title>{{ item.item_name }}</title>
 </head>
 
 <body>
-<h1>{{item.item_name}} ({{item.status}})</h1>
+<h1>{{ item.item_name }} ({{ item.status }})</h1>
 {% if session.user_id == item.user_id %}
 <form action="/item/{{ item.id }}" method="POST">
-    <input type="submit" name="edit" value="Edit">
-    <input type="submit" name="remove" value="Remove">
-  </form>
+    <input type="submit" name="edit" value="Edit"/>
+    <input type="submit" name="remove" value="Remove"/>
+</form>
 {% endif %}
 <p>
-    {{item.description}}
+    {{ item.description }}
 </p>
 <p>
-    Uploader: {{item.username}}
+    Uploader: {{ item.username }}
 </p>
 <form action="/login" method="POST">
     <input type="submit" name="return" value="Return">
