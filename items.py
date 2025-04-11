@@ -23,7 +23,7 @@ def get_item(item_id):
     return db.query(sql, [item_id])[0]
 
 def update_item(item_id, item_name, description, status):
-    sql = """UPDATE items SET   item_name=?,
+    sql="""UPDATE items SET   item_name=?,
                                 description=?,
                                 status=?
                           WHERE id = ?"""
@@ -31,5 +31,13 @@ def update_item(item_id, item_name, description, status):
     db.execute(sql, [item_name, description, status, item_id])
 
 def remove_item(item_id):
-    sql = "DELETE FROM items WHERE id = ?"
+    sql="DELETE FROM items WHERE id=?"
     db.execute(sql, [item_id])
+
+def find_item(query):
+    sql="""SELECT id, item_name, status
+            FROM  items
+            WHERE item_name LIKE ? OR description LIKE ?
+            ORDER BY id DESC"""
+
+    return db.query(sql, ["%" + query + "%", "%" + query + "%"])
