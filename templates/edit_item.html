@@ -21,7 +21,8 @@
       <input type="radio" name="status" value="Found" {% if item.status == "Found" %} checked {% endif %}/> Found
     </p>
     <input type="hidden" name="item_id" value="{{ item.id }}"/>
-    <input type="submit" value="Save"/>
+    <input type="submit" name="save" value="Save"/>
+    <input type="submit" name="return" value="Return"/>
   </form>
 </body>
 
