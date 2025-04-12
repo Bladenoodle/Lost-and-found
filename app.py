@@ -8,6 +8,10 @@ import items
 app=Flask(__name__)
 app.secret_key=config.secret_key
 
+def require_login():
+    if "user_id" not in session:
+        abort(403)
+
 @app.route("/")
 def index():
     all_items=items.get_items()
@@ -25,6 +29,7 @@ def find_item():
 
 @app.route("/new_item")
 def new_item():
+    require_login()
     return render_template("new_item.html")
 
 @app.route("/create_item", methods=["POST"])
@@ -51,6 +56,7 @@ def show_item(item_id):
 
 @app.route("/edit_item/<int:item_id>")
 def edit_item(item_id):
+    require_login()
     item=items.get_item(item_id)
     if not item:
         abort(404)
@@ -82,6 +88,7 @@ def update_item():
 
 @app.route("/remove_item/<int:item_id>", methods=["GET", "POST"])
 def remove_item(item_id):
+    require_login()
     item=items.get_item(item_id)
     if not item:
         abort(404)
