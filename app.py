@@ -4,6 +4,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 import config
 import db
 import items
+import users
 
 app=Flask(__name__)
 app.secret_key=config.secret_key
@@ -13,7 +14,7 @@ def require_login():
         abort(403)
 
 def limit_length(string, maxlength):
-    if len(string) > maxlength or len(string)==0:
+    if len(string)>maxlength or len(string)==0:
         abort(403)
 
 @app.route("/")
@@ -112,6 +113,14 @@ def remove_item(item_id):
             return redirect("/")
         else:
             return redirect("/item/" + str(item_id))
+
+@app.route("/user/<int:user_id>")
+def show_user(user_id):
+    user=users.get_user(user_id)
+    if not user:
+        abort(404)
+    items=users.get_items(user_id)
+    return render_template("show_user.html", user=user, items=items)
 
 @app.route("/register")
 def register():

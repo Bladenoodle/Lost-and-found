@@ -1,0 +1,25 @@
+<html>
+
+<head>
+  <title>User:{{ user.username }}</title>
+</head>
+
+<body>
+    <h1>User: {{ user.username }}</h1>
+    <p>
+        User has uploaded {{ items | count }} posts.
+    </p>
+    <h2>Posts</h2>
+    <ul>
+        {%for item in items%}
+        <li>
+          <a href="/item/{{ item.id }}">{{ item.item_name }} ({{ item.status }})</a>
+        </li>
+        {% endfor %}
+      </ul>
+    <p>
+        <a href="/"> Home page</a>
+    </p>
+</body>
+
+</html>

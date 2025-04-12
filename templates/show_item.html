@@ -5,22 +5,22 @@
 </head>
 
 <body>
-<h1>{{ item.item_name }} ({{ item.status }})</h1>
-{% if session.user_id == item.user_id %}
-<p>
-    <a href="/edit_item/{{ item.id }}">Edit</a>
-    <a href="/remove_item/{{ item.id }}">Remove</a>
-</p>
-{% endif %}
-<p>
-    {{ item.description }}
-</p>
-<p>
-    Uploader: {{ item.username }}
-</p>
-<p>
-    <a href="/"> Home page</a>
-</p>
+    <h1>{{ item.item_name }} ({{ item.status }})</h1>
+    {% if session.user_id == item.user_id %}
+    <p>
+        <a href="/edit_item/{{ item.id }}">Edit</a>
+        <a href="/remove_item/{{ item.id }}">Remove</a>
+    </p>
+    {% endif %}
+    <p>
+        {{ item.description }}
+    </p>
+    <p>
+        Uploader: <a href="/user/{{ item.user_id }}">{{ item.username }}</a>
+    </p>
+    <p>
+        <a href="/"> Home page</a>
+    </p>
 </body>
 
 </html>

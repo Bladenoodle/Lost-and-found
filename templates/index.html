@@ -20,21 +20,20 @@
   <p> 
     <a href="/login"> Log in</a>
     <a href="/register"> Sign up</a>
-</p>
-<p>
-  <a href="/find_item"> Find item</a>
-</p>
+  </p>
+  <p>
+    <a href="/find_item"> Find item</a>
+  </p>
 
-  {% endif %}
-<h2> Posts </h2>
-<ul>
-  {%for item in items%}
-  <li>
-    <a href="/item/{{ item.id }}">{{ item.item_name }} ({{ item.status }})</a>
-  </li>
-  {% endfor %}
-</ul>
-
+    {% endif %}
+  <h2> Posts </h2>
+  <ul>
+    {%for item in items%}
+    <li>
+      <a href="/item/{{ item.id }}">{{ item.item_name }} ({{ item.status }})</a>
+    </li>
+    {% endfor %}
+  </ul>
 </body>
 
 </html>
