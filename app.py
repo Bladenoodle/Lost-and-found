@@ -46,8 +46,15 @@ def create_item():
         limit_length(description, 1000)
         status=request.form["status"]
         user_id=session["user_id"]
+        classes=[]
+        location=request.form["location"]
+        if location:
+            classes.append(("Location", location))
+        last_seen=request.form["last_seen"]
+        if last_seen:
+            classes.append(("Last_seen", last_seen))
 
-        items.add_item(item_name, description, status, user_id)
+        items.add_item(item_name, description, status, user_id, classes)
 
         return redirect("/")
 
@@ -56,8 +63,8 @@ def show_item(item_id):
     item=items.get_item(item_id)
     if not item:
         abort(404)
-
-    return render_template("show_item.html", item=item)
+    classes=items.get_classes(item_id)
+    return render_template("show_item.html", item=item, classes=classes)
 
 @app.route("/edit_item/<int:item_id>")
 def edit_item(item_id):

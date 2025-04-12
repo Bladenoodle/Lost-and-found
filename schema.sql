@@ -11,3 +11,10 @@ CREATE TABLE items (
     status TEXT,
     user_id INTEGER REFERENCES users
 );
+
+CREATE TABLE item_classes (
+    id INTEGER PRIMARY KEY,
+    item_id INTEGER REFERENCES items,
+    class_name TEXT,
+    value TEXT
+);

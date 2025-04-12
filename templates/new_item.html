@@ -12,13 +12,33 @@
       <input type="text" name="item_name" maxlength="50" required/>
     </p>
     <p>
-      Description:<br/>
-      <textarea name="description" rows="8", cols="60" maxlength="1000" required></textarea>
-    </p>
-    <p>
       Lost or found<br/>
       <input type="radio" name="status" value="Lost" checked required/> Lost
       <input type="radio" name="status" value="Found"/> Found
+    </p>
+    <p>
+      Location (found/lost):<br/>
+      <select name="location">
+        <option value="">(select)</option>
+        <option value="Centre">Centre Campus</option>
+        <option value="Kumpula">Kumpula Campus</option>
+        <option value="Meilahti">Meilahti Campus</option>
+        <option value="Viikki">Viikki Campus</option>
+      </select>
+    </p>
+    <p>
+      Last seen:<br/>
+      <select name="last_seen">
+        <option value="">(select)</option>
+        <option value="day">days ago</option>
+        <option value="week">weeks ago</option>
+        <option value="month">months ago</option>
+        <option value="year">years ago</option>
+      </select>
+    </p>
+    <p>
+      Description:<br/>
+      <textarea name="description" rows="8", cols="60" maxlength="1000" required></textarea>
     </p>
     <input type="submit" name="add" value="Add item"/>
     <input type="submit" name="return" value="Return" formnovalidate/>
