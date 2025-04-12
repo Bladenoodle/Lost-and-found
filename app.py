@@ -12,6 +12,10 @@ def require_login():
     if "user_id" not in session:
         abort(403)
 
+def limit_length(string, maxlength):
+    if len(string) > maxlength or len(string)==0:
+        abort(403)
+
 @app.route("/")
 def index():
     all_items=items.get_items()
@@ -38,7 +42,9 @@ def create_item():
         return redirect("/")
     if "add" in request.form:
         item_name=request.form["item_name"]
+        limit_length(item_name, 50)
         description=request.form["description"]
+        limit_length(description, 1000)
         status=request.form["status"]
         user_id=session["user_id"]
 
@@ -79,7 +85,9 @@ def update_item():
 
     if "save" in request.form:
         item_name=request.form["item_name"]
+        limit_length(item_name, 50)
         description=request.form["description"]
+        limit_length(description, 1000)
         status=request.form["status"]
 
         items.update_item(item_id, item_name, description, status)

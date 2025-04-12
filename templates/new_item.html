@@ -9,11 +9,11 @@
   <form action="/create_item" method="POST">
     <p>
       Item name: <br/>
-      <input type="text" name="item_name"/>
+      <input type="text" name="item_name" maxlength="50" required/>
     </p>
     <p>
       Description:<br/>
-      <textarea name="description" rows="8", cols="60"></textarea>
+      <textarea name="description" rows="8", cols="60" maxlength="1000" required></textarea>
     </p>
     <p>
       Lost or found<br/>
@@ -21,7 +21,7 @@
       <input type="radio" name="status" value="Found"/> Found
     </p>
     <input type="submit" name="add" value="Add item"/>
-    <input type="submit" name="return" value="Return"/>
+    <input type="submit" name="return" value="Return" formnovalidate/>
   </form>
 </body>
 
