@@ -6,7 +6,7 @@ INSERT INTO classes (class_name, value) VALUES ("Location", "Kumpula");
 INSERT INTO classes (class_name, value) VALUES ("Location", "Meilahti");
 INSERT INTO classes (class_name, value) VALUES ("Location", "Viikki");
 
-DELETE FROM classes WHERE class_name = "Time";
+DELETE FROM classes WHERE class_name="Time";
 
 INSERT INTO classes (class_name, value) VALUES ("Time", "2023-01-01");
 INSERT INTO classes (class_name, value) VALUES ("Time", "2023-01-02");

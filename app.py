@@ -53,6 +53,7 @@ def create_item():
             if entry:
                 parts=entry.split(":")
                 classes.append((parts[0], parts[1]))
+
         items.add_item(item_name, description, status, user_id, classes)
 
         return redirect("/")
@@ -74,7 +75,13 @@ def edit_item(item_id):
 
     if item["user_id"]!=session["user_id"]:
         abort(403)
-    return render_template("edit_item.html", item=item)
+    all_classes=items.get_all_classes()
+    item_classes={}
+    for item_class in all_classes:
+        item_classes[item_class]=""
+    for entry in items.get_classes(item_id):
+        item_classes[entry["item_class_name"]]=entry["value"]
+    return render_template("edit_item.html", item=item, all_classes=all_classes, item_classes=item_classes)
 
 @app.route("/update_item", methods=["POST"])
 def update_item():
@@ -95,7 +102,13 @@ def update_item():
         limit_length(description, 1000)
         status=request.form["status"]
 
-        items.update_item(item_id, item_name, description, status)
+        classes=[]
+        for entry in request.form.getlist("classes"):
+            if entry:
+                parts=entry.split(":")
+                classes.append((parts[0], parts[1]))
+
+        items.update_item(item_id, item_name, description, status, classes)
 
         return redirect("/item/" + str(item_id))
 

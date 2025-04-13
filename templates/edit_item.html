@@ -21,6 +21,21 @@
       <input type="radio" name="status" value="Found" {% if item.status == "Found" %} checked {% endif %}/> Found
     </p>
     <input type="hidden" name="item_id" value="{{ item.id }}"/>
+    {% for class in all_classes %}
+    <p>
+      {{ class }}:<br/>
+      <select name="classes">
+        <option value="">(select)</option>
+        {% for option in all_classes[class] %}
+        {% if item_classes[class]==option %}
+        <option value="{{ class }}:{{ option }}" selected>{{ option }}</option>
+        {% else %}
+        <option value="{{ class }}:{{ option }}">{{ option }}</option>
+        {% endif %}
+        {% endfor %}
+      </select>
+    </p>
+    {% endfor %}
     <input type="submit" name="save" value="Save"/>
     <input type="submit" name="return" value="Return" formnovalidate/>
   </form>
