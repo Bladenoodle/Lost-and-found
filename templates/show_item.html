@@ -15,20 +15,16 @@
     <p>
         {{ item.description }}
     </p>
+    {% if classes %}
     <p>
-        Place/time:
+        When & Where:
         <ul>
             {% for class in classes %}
-            {% if class.class_name =="Last_seen" and item.status=="Lost" %}
-            <li>Last seen in: {{ class.value }}</li>
-            {% elif class.class_name =="Last_seen" and item.status=="Found" %}
-            <li>Found: {{ class.value }}s ago</li>
-            {% else %}
-            <li>Location: {{ class.value }} Campus</li>
-            {% endif %}
+            <li>{{ class[0] }}: {{ class[1] }}</li>
             {% endfor %}
         </ul>
     </p>
+    {% endif %}
     <p>
         Uploader: <a href="/user/{{ item.user_id }}">{{ item.username }}</a>
     </p>

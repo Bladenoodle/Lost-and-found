@@ -1,21 +1,33 @@
 import db
 
+def get_all_classes():
+    sql="SELECT class_name, value FROM classes ORDER BY id"
+    result=db.query(sql)
+
+    classes={}
+    for class_name, value in result:
+        classes[class_name]=[]
+    for class_name, value in result:
+        classes[class_name].append(value)
+
+    return classes
+
 def add_item(item_name, description, status, user_id, classes):
     sql="INSERT INTO items (item_name, description,status, user_id) VALUES (?, ?, ?, ?)"
     db.execute(sql, [item_name, description, status, user_id])
 
     item_id=db.last_insert_id()
 
-    sql="INSERT INTO item_classes (item_id, class_name, value) VALUES (?, ?, ?)"
-    for class_name, value in classes:
-        db.execute(sql, [item_id, class_name, value])
+    sql="INSERT INTO item_classes (item_id, item_class_name, value) VALUES (?, ?, ?)"
+    for item_class_name, value in classes:
+        db.execute(sql, [item_id, item_class_name, value])
 
 def get_items():
     sql="SELECT id, item_name, status FROM items ORDER BY id DESC"
     return db.query(sql)
 
 def get_classes(item_id):
-    sql="SELECT class_name, value FROM item_classes WHERE item_id = ?"
+    sql="SELECT item_class_name, value FROM item_classes WHERE item_id = ?"
     return db.query(sql, [item_id])
 
 def get_item(item_id):

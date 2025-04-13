@@ -33,7 +33,8 @@ def find_item():
 @app.route("/new_item")
 def new_item():
     require_login()
-    return render_template("new_item.html")
+    classes=items.get_all_classes()
+    return render_template("new_item.html", classes=classes)
 
 @app.route("/create_item", methods=["POST"])
 def create_item():
@@ -46,14 +47,12 @@ def create_item():
         limit_length(description, 1000)
         status=request.form["status"]
         user_id=session["user_id"]
-        classes=[]
-        location=request.form["location"]
-        if location:
-            classes.append(("Location", location))
-        last_seen=request.form["last_seen"]
-        if last_seen:
-            classes.append(("Last_seen", last_seen))
 
+        classes=[]
+        for entry in request.form.getlist("classes"):
+            if entry:
+                parts=entry.split(":")
+                classes.append((parts[0], parts[1]))
         items.add_item(item_name, description, status, user_id, classes)
 
         return redirect("/")
