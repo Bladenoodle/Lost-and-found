@@ -38,6 +38,7 @@ def new_item():
 
 @app.route("/create_item", methods=["POST"])
 def create_item():
+    require_login()
     if "return" in request.form:
         return redirect("/")
     if "add" in request.form:
@@ -70,7 +71,8 @@ def show_item(item_id):
     if not item:
         abort(404)
     classes=items.get_classes(item_id)
-    return render_template("show_item.html", item=item, classes=classes)
+    claims=items.get_claims(item_id)
+    return render_template("show_item.html", item=item, classes=classes, claims=claims)
 
 @app.route("/edit_item/<int:item_id>")
 def edit_item(item_id):
@@ -91,6 +93,7 @@ def edit_item(item_id):
 
 @app.route("/update_item", methods=["POST"])
 def update_item():
+    require_login()
     item_id=request.form["item_id"]
     item=items.get_item(item_id)
     if not item:
@@ -142,6 +145,22 @@ def remove_item(item_id):
             return redirect("/")
         else:
             return redirect("/item/" + str(item_id))
+
+@app.route("/create_claim", methods=["POST"])
+def create_claim():
+    require_login()
+
+    contact_info=request.form["contact_info"]
+    limit_length(contact_info, 100)
+    item_id=request.form["item_id"]
+    item=items.get_item(item_id)
+    if not item:
+        abort(403)
+    user_id=session["user_id"]
+
+    items.add_claim(item_id, user_id, contact_info)
+
+    return redirect("/item/" + str(item_id))
 
 @app.route("/user/<int:user_id>")
 def show_user(user_id):

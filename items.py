@@ -35,7 +35,7 @@ def get_item(item_id):
                     items.item_name,
                     items.description,
                     items.status,
-                    users.id user_id,
+                    users.id AS user_id,
                     users.username
             FROM    items, users
             WHERE   items.user_id=users.id AND
@@ -72,3 +72,14 @@ def find_item(query):
             ORDER BY id DESC"""
 
     return db.query(sql, ["%" + query + "%", "%" + query + "%"])
+
+def add_claim(item_id, user_id, contact_info):
+    sql="INSERT INTO claims (item_id, user_id, contact_info) VALUES (?, ?, ?)"
+    return db.execute(sql, [item_id, user_id, contact_info])
+
+def get_claims(item_id):
+    sql="""SELECT claims.contact_info, users.id AS user_id, users.username
+           FROM claims, users
+           WHERE claims.item_id=? AND claims.user_id = users.id
+           ORDER BY claims.id DESC"""
+    return db.query(sql, [item_id])
