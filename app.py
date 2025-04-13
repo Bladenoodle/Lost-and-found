@@ -48,10 +48,16 @@ def create_item():
         status=request.form["status"]
         user_id=session["user_id"]
 
+        all_classes=items.get_all_classes()
+
         classes=[]
         for entry in request.form.getlist("classes"):
             if entry:
                 parts=entry.split(":")
+                if parts[0] not in all_classes:
+                    abort(403)
+                if parts[1] not in all_classes[parts[0]]:
+                    abort(403)
                 classes.append((parts[0], parts[1]))
 
         items.add_item(item_name, description, status, user_id, classes)
@@ -102,10 +108,16 @@ def update_item():
         limit_length(description, 1000)
         status=request.form["status"]
 
+        all_classes=items.get_all_classes()
+
         classes=[]
         for entry in request.form.getlist("classes"):
             if entry:
                 parts=entry.split(":")
+                if parts[0] not in all_classes:
+                    abort(403)
+                if parts[1] not in all_classes[parts[0]]:
+                    abort(403)
                 classes.append((parts[0], parts[1]))
 
         items.update_item(item_id, item_name, description, status, classes)
