@@ -16,7 +16,7 @@
 
   > source venv/bin/activate (if windows: source venv/Scripts/activate)
 - Install flask:
-  > pip install
+  > pip install flask
 - Update init.sql:
   > python3 date_generator.py
 - Create & setup database.db:
