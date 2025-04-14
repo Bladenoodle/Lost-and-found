@@ -21,8 +21,11 @@
   > python3 date_generator.py
 - Create & setup database.db:
   > sqlite3 database.db < init.sql
+  
   > sqlite3 database.db < schema.sql
+  
   > cat > config.py
+  
      > secret_key = (any secret key of your choice e.g.      "18fd24bf6a2ad4dac04a33963db1c42f")
 - run application with:
   > flask run
