@@ -13,6 +13,7 @@
   > cd lost-and-found
 - Create python workspace and enter:
   > python3 -m venv venv
+
   > source venv/bin/activate (if windows: source venv/Scripts/activate)
 - Install flask:
   > pip install
