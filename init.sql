@@ -1,13 +1,16 @@
 DELETE FROM classes;
 
 
-INSERT INTO classes (class_name, value) VALUES ("Location", "Centre");
-INSERT INTO classes (class_name, value) VALUES ("Location", "Kumpula");
-INSERT INTO classes (class_name, value) VALUES ("Location", "Meilahti");
-INSERT INTO classes (class_name, value) VALUES ("Location", "Viikki");
+INSERT INTO classes (class_name, value) VALUES ('Location', 'Centre');
+INSERT INTO classes (class_name, value) VALUES ('Location', 'Kumpula');
+INSERT INTO classes (class_name, value) VALUES ('Location', 'Meilahti');
+INSERT INTO classes (class_name, value) VALUES ('Location', 'Viikki');
+
+DELETE FROM classes WHERE class_name='Time';
+
 
 DELETE FROM classes WHERE class_name="Time";
-
+INSERT INTO classes (class_name, value) VALUES ("Time", "2025-04-14");
 INSERT INTO classes (class_name, value) VALUES ("Time", "2025-04-13");
 INSERT INTO classes (class_name, value) VALUES ("Time", "2025-04-12");
 INSERT INTO classes (class_name, value) VALUES ("Time", "2025-04-11");
