@@ -9,10 +9,10 @@
 * The user can make claim requests in other user's posts and view requests on their own posts.
 
 # Installation
-- Install flask
 - Create python workspace and enter:
     * python3 -m venv venv
     * source venv/bin/activate (if windows: source venv/Scripts/activate)
+- Install flask
 - Update init.sql:
   * python3 date_generator.py
 - Create & setup database.db:
