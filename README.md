@@ -9,19 +9,22 @@
 * The user can make claim requests in other user's posts and view requests on their own posts.
 
 # Installation
+- Move to directory lost-and-found:
+  > cd lost-and-found
 - Create python workspace and enter:
-    * python3 -m venv venv
-    * source venv/bin/activate (if windows: source venv/Scripts/activate)
-- Install flask
+  > python3 -m venv venv
+  > source venv/bin/activate (if windows: source venv/Scripts/activate)
+- Install flask:
+  > pip install
 - Update init.sql:
-  * python3 date_generator.py
+  > python3 date_generator.py
 - Create & setup database.db:
-  * sqlite3 database.db < init.sql
-  * sqlite3 database.db < schema.sql
-  * cat > config.py
+  > sqlite3 database.db < init.sql
+  > sqlite3 database.db < schema.sql
+  > cat > config.py
      > secret_key = (any secret key of your choice e.g.      "18fd24bf6a2ad4dac04a33963db1c42f")
 - run application with:
-  * flask run
+  > flask run
 
 
   
