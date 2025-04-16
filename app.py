@@ -3,6 +3,7 @@ from flask import abort, redirect, render_template, request, session
 import config
 import items
 import users
+import claims
 import sqlite3
 
 app = Flask(__name__)
@@ -71,9 +72,9 @@ def show_item(item_id):
     item = items.get_item(item_id)
     if not item:
         abort(404)
+    all_claims = claims.get_claims(item_id)
     classes = items.get_classes(item_id)
-    claims = items.get_claims(item_id)
-    return render_template("show_item.html", item=item, classes=classes, claims=claims)
+    return render_template("show_item.html", item=item, classes=classes, all_claims=all_claims)
 
 @app.route("/edit_item/<int:item_id>")
 def edit_item(item_id):
@@ -160,30 +161,29 @@ def create_claim():
     user_id = session["user_id"]
 
     try:
-        items.add_claim(item_id, user_id, contact_info)
+        claims.add_claim(item_id, user_id, contact_info)
         return redirect("/item/" + str(item_id))
     except sqlite3.IntegrityError:
-        old_claim = items.get_claim_by_user(item_id, user_id)
+        old_claim = claims.get_claim_by_user(item_id, user_id)
         return render_template("replace_claim.html", old_claim=old_claim, contact_info=contact_info)
 
 @app.route("/remove_claim/<int:claim_id>", methods=["POST"])
 def remove_claim(claim_id):
     require_login()
-    claim = items.get_claim_by_id(claim_id)
+    claim = claims.get_claim_by_id(claim_id)
     if not claim:
         abort(404)
     if claim["user_id"] != session["user_id"]:
         abort(403)
 
     item_id = claim["item_id"]
-    items.remove_claim(claim_id)
+    claims.remove_claim(claim_id)
     return redirect("/item/" + str(item_id))
 
 @app.route("/replace_claim/<int:claim_id>", methods=["POST"])
 def replace_claim(claim_id):
     require_login()
-    print(claim_id)
-    claim = items.get_claim_by_id(claim_id)
+    claim = claims.get_claim_by_id(claim_id)
     if not claim:
         abort(404)
     if claim["user_id"] != session["user_id"]:
@@ -195,7 +195,7 @@ def replace_claim(claim_id):
     if "cancel" in request.form:
         return redirect("/item/" + str(claim[1]))
     if "replace" in request.form:
-        items.replace_claim(claim_id, new_contact_info)
+        claims.replace_claim(claim_id, new_contact_info)
         return redirect("/item/" + str(claim[1]))
 
 @app.route("/user/<int:user_id>")
