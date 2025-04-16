@@ -5,9 +5,14 @@ import items
 import users
 import claims
 import sqlite3
+import time
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
+
+@app.template_filter("datetimeformat")
+def datetime_format(value):
+    return time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(value))
 
 def require_login():
     if "user_id" not in session:
@@ -63,7 +68,10 @@ def create_item():
                     abort(403)
                 classes.append((parts[0], parts[1]))
 
-        items.add_item(item_name, description, status, user_id, classes)
+        upload_time = int(time.time())
+        edit_time = upload_time
+
+        items.add_item(item_name, description, status, user_id, classes, upload_time, edit_time)
 
         return redirect("/")
 
@@ -125,7 +133,8 @@ def update_item():
                     abort(403)
                 classes.append((parts[0], parts[1]))
 
-        items.update_item(item_id, item_name, description, status, classes)
+        edit_time = int(time.time())
+        items.update_item(item_id, item_name, description, status, classes, edit_time)
 
         return redirect("/item/" + str(item_id))
 

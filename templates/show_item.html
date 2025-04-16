@@ -6,6 +6,13 @@
 
 <body>
     <h1>{{ item.item_name }} ({{ item.status }})</h1>
+    <p>
+        Uploaded: {{ item.upload_time | datetimeformat }}
+        {% if item.upload_time != item.edit_time %}
+        <br>
+        Last edited: {{ item.edit_time | datetimeformat }}
+        {% endif %}
+    </p>
     {% if session.user_id == item.user_id %}
     <p>
         <a href="/edit_item/{{ item.id }}">Edit</a>
@@ -38,7 +45,7 @@
         {% endif %}
     {% else %}
     </ul>
-    {% for claim in all_claims %}
+    {% for claim in claims %}
         {% if claim.user_id == session.user_id %}
         <h2>Your request:</h2>
         <li><a href="/user/{{ claim.user_id }}">{{ claim.username }}</a>: {{ claim.contact_info }}

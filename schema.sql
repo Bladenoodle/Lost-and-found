@@ -9,7 +9,9 @@ CREATE TABLE items (
     item_name TEXT UNIQUE,
     description TEXT,
     status TEXT,
-    user_id INTEGER REFERENCES users
+    user_id INTEGER REFERENCES users,
+    upload_time INTEGER UNIQUE,
+    edit_time INTEGER UNIQUE
 );
 
 CREATE TABLE claims (

@@ -1,20 +1,8 @@
 import db
 
-def get_all_classes():
-    sql = "SELECT class_name, value FROM classes ORDER BY id"
-    result = db.query(sql)
-
-    classes = {}
-    for class_name, value in result:
-        classes[class_name] = []
-    for class_name, value in result:
-        classes[class_name].append(value)
-
-    return classes
-
-def add_item(item_name, description, status, user_id, classes):
-    sql = "INSERT INTO items (item_name, description,status, user_id) VALUES (?, ?, ?, ?)"
-    db.execute(sql, [item_name, description, status, user_id])
+def add_item(item_name, description, status, user_id, classes, upload_time, edit_time):
+    sql = "INSERT INTO items (item_name, description, status, user_id, upload_time, edit_time) VALUES (?, ?, ?, ?, ?, ?)"
+    db.execute(sql, [item_name, description, status, user_id, upload_time, edit_time])
 
     item_id = db.last_insert_id()
 
@@ -26,15 +14,13 @@ def get_items():
     sql = "SELECT id, item_name, status FROM items ORDER BY id DESC"
     return db.query(sql)
 
-def get_classes(item_id):
-    sql = "SELECT item_class_name, value FROM item_classes WHERE item_id = ?"
-    return db.query(sql, [item_id])
-
 def get_item(item_id):
-    sql = """SELECT   items.id,
+    sql = """SELECT items.id,
                     items.item_name,
                     items.description,
                     items.status,
+                    items.upload_time,
+                    items.edit_time,
                     users.id AS user_id,
                     users.username
             FROM    items, users
@@ -44,13 +30,15 @@ def get_item(item_id):
     result = db.query(sql, [item_id])
     return result[0] if result else None
 
-def update_item(item_id, item_name, description, status, classes):
+def update_item(item_id, item_name, description, status, classes, edit_time):
     sql = """UPDATE items SET   item_name = ?,
                                 description = ?,
-                                status = ?
-                          WHERE id = ?
-                          """
-    db.execute(sql, [item_name, description, status, item_id])
+                                status = ?,
+                                edit_time = ?
+                        WHERE   id = ?
+                        """
+    db.execute(sql, [item_name, description, status, edit_time, item_id])
+
 
     sql = "DELETE FROM item_classes WHERE item_id = ?"
     db.execute(sql, [item_id])
@@ -72,3 +60,19 @@ def find_item(query):
             ORDER BY id DESC"""
 
     return db.query(sql, ["%" + query + "%", "%" + query + "%"])
+
+def get_all_classes():
+    sql = "SELECT class_name, value FROM classes ORDER BY id"
+    result = db.query(sql)
+
+    classes = {}
+    for class_name, value in result:
+        classes[class_name] = []
+    for class_name, value in result:
+        classes[class_name].append(value)
+
+    return classes
+
+def get_classes(item_id):
+    sql = "SELECT item_class_name, value FROM item_classes WHERE item_id = ?"
+    return db.query(sql, [item_id])
