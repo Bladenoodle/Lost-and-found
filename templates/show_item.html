@@ -29,11 +29,13 @@
     </p>
     {% endif %}
     {% if session.user_id == item.user_id %}
-    <h2>Claim requests</h2>
-    <ul>
-        {% for claim in claims %}
-        <li><a href="/user/{{ claim.user_id }}">{{ claim.username }}</a>: {{ claim.contact_info }}</li>
-        {% endfor %}
+        {% if claims %}
+        <h2>Claim requests</h2>
+        <ul>
+            {% for claim in claims %}
+            <li><a href="/user/{{ claim.user_id }}">{{ claim.username }}</a>: {{ claim.contact_info }}</li>
+            {% endfor %}
+        {% endif %}
     {% else %}
     </ul>
     {% for claim in claims %}
