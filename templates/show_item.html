@@ -39,7 +39,12 @@
     {% for claim in claims %}
         {% if claim.user_id == session.user_id %}
         <h2>Your request:</h2>
-        <li><a href="/user/{{ claim.user_id }}">{{ claim.username }}</a>: {{ claim.contact_info }}</li>
+        <li><a href="/user/{{ claim.user_id }}">{{ claim.username }}</a>: {{ claim.contact_info }}
+        </li>
+        <p></p>
+        <form action="/remove_claim/{{ claim.id }}" method="POST">
+            <input type="submit" value="Remove"/>
+        </form>
         {% endif %}
     {% endfor %}
     <h2>Make a claim request</h2>

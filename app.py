@@ -164,7 +164,20 @@ def create_claim():
         return redirect("/item/" + str(item_id))
     except sqlite3.IntegrityError:
         old_claim = items.get_claim_by_user(item_id, user_id)
-        return render_template("remove_claim.html", old_claim=old_claim, contact_info=contact_info)
+        return render_template("replace_claim.html", old_claim=old_claim, contact_info=contact_info)
+
+@app.route("/remove_claim/<int:claim_id>", methods=["POST"])
+def remove_claim(claim_id):
+    require_login()
+    claim = items.get_claim_by_id(claim_id)
+    if not claim:
+        abort(404)
+    if claim["user_id"] != session["user_id"]:
+        abort(403)
+
+    item_id = claim["item_id"]
+    items.remove_claim(claim_id)
+    return redirect("/item/" + str(item_id))
 
 @app.route("/replace_claim/<int:claim_id>", methods=["POST"])
 def replace_claim(claim_id):
