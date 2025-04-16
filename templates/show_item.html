@@ -34,8 +34,14 @@
         {% for claim in claims %}
         <li><a href="/user/{{ claim.user_id }}">{{ claim.username }}</a>: {{ claim.contact_info }}</li>
         {% endfor %}
-    </ul>
     {% else %}
+    </ul>
+    {% for claim in claims %}
+        {% if claim.user_id == session.user_id %}
+        <h2>Your request:</h2>
+        <li><a href="/user/{{ claim.user_id }}">{{ claim.username }}</a>: {{ claim.contact_info }}</li>
+        {% endif %}
+    {% endfor %}
     <h2>Make a claim request</h2>
 
     <form action="/create_claim" method="POST">

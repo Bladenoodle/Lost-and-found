@@ -27,7 +27,7 @@
       <select name="classes">
         <option value="">(select)</option>
         {% for option in all_classes[class] %}
-        {% if item_classes[class]==option %}
+        {% if item_classes[class] == option %}
         <option value="{{ class }}:{{ option }}" selected>{{ option }}</option>
         {% else %}
         <option value="{{ class }}:{{ option }}">{{ option }}</option>

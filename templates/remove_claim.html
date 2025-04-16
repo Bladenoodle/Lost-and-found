@@ -1,0 +1,22 @@
+<html>
+
+<head>
+  <title>Remove claim</title>
+</head>
+
+<body>
+    <h1>You can only have one request per item</h1>
+    <p>
+        This is your previous request: {{ old_claim.contact_info }}
+    </p>
+    <p>
+        Do you want to replace it with: {{ contact_info }}?
+    </p>
+  <form action="/replace_claim/{{ old_claim.id }}" method="POST">
+    <input type="hidden" name="contact_info" value="{{ contact_info }}"/>
+    <input type="submit" name="replace" value="Replace"/>
+    <input type="submit" name="cancel" value="Cancel"/>
+  </form>
+</body>
+
+</html>
