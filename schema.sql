@@ -17,7 +17,7 @@ CREATE TABLE items (
 CREATE TABLE claims (
     id INTEGER PRIMARY KEY,
     item_id INTEGER REFERENCES items,
-    user_id INTEGER UNIQUE REFERENCES users,
+    user_id INTEGER REFERENCES users,
     contact_info TEXT
 );
 

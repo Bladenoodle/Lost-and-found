@@ -22,8 +22,8 @@ def get_claim_by_user(item_id, user_id):
     sql = """SELECT id, item_id, user_id, contact_info
              FROM claims
              WHERE item_id = ? AND user_id = ?"""
-    result = db.query(sql, [item_id, user_id])[0]
-    return result if result else None
+    result = db.query(sql, [item_id, user_id])
+    return result[0] if result else None
 
 def remove_claim(claim_id):
     sql = "DELETE FROM claims WHERE id = ?"

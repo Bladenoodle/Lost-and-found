@@ -45,7 +45,7 @@
         {% endif %}
     {% else %}
     </ul>
-    {% for claim in claims %}
+    {% for claim in all_claims %}
         {% if claim.user_id == session.user_id %}
         <h2>Your request:</h2>
         <li><a href="/user/{{ claim.user_id }}">{{ claim.username }}</a>: {{ claim.contact_info }}
