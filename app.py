@@ -201,7 +201,7 @@ def replace_claim(claim_id):
     if not new_contact_info:
         abort(404)
 
-    if "cancel" in request.form:
+    if "return" in request.form:
         return redirect("/item/" + str(claim[1]))
     if "replace" in request.form:
         claims.replace_claim(claim_id, new_contact_info)
