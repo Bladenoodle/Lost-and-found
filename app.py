@@ -225,15 +225,21 @@ def create():
         return redirect("/")
     if "signup" in request.form:
         username = request.form["username"]
+        limit_length(username, 30)
         password1 = request.form["password1"]
+        limit_length(password1, 50)
         password2 = request.form["password2"]
+        limit_length(password2, 50)
         if password1 != password2:
-            return render_template("401.html")
+            return render_template("reject.html", password=True)
         try:
             users.create_user(username, password1)
+            user_id = users.check_login(username, password1)
+            session["user_id"] = user_id
+            session["username"] = username
+            return redirect("/")
         except sqlite3.IntegrityError:
-            return render_template("401.html")
-        return redirect("/")
+            return render_template("reject.html", username=True)
 
 @app.route("/login", methods = ["GET", "POST"])
 def login():
@@ -254,7 +260,7 @@ def login():
                 session["username"] = username
                 return redirect("/")
             else:
-                return render_template("401.html")
+                return render_template("reject.html", login=True)
 
 @app.route("/logout")
 def logout():

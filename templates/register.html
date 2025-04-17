@@ -8,18 +8,18 @@
   <form action="/create" method="POST">
     <p>
       Username: <br/>
-      <input type="text" name="username" maxlength="30"/>
+      <input type="text" name="username" maxlength="30" required/>
     </p>
     <p>
       Password: <br/>
-      <input type="password" name="password1"/>
+      <input type="password" name="password1" required/>
     </p>
     <p>
       Repeat password: <br/>
-      <input type="password" name="password2"/>
+      <input type="password" name="password2" required/>
     </p>
     <input type="submit" name="signup" value="Sign up"/>
-    <input type="submit" name="return" value="Return"/>
+    <input type="submit" name="return" value="Return" formnovalidate/>
   </form>
 </body>
 

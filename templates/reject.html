@@ -1,0 +1,26 @@
+<html>
+
+<head>
+  <title>Error: Invalid username or password</title>
+</head>
+{% if username == True %}
+<body>
+    <h1>Error: Username is occupied</h1>
+    <a href="/register"> Return</a>
+{% endif %}
+
+{% if password == True %}
+<body>
+    <h1>Error: Passwords did not match</h1>
+    <a href="/register"> Return</a>
+{% endif %}
+</body>
+
+{% if login == True %}
+<body>
+    <h1>Error: Invalid username or password</h1>
+    <a href="/login"> Return</a>
+{% endif %}
+</body>
+
+</html>

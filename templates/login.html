@@ -16,14 +16,14 @@
   <form action="/login" method="POST">
     <p>
       Username: <br/>
-      <input type="text" name="username"/>
+      <input type="text" name="username" required/>
     </p>
     <p>
       Password: <br/>
-      <input type="password" name="password"/>
+      <input type="password" name="password" required/>
     </p>
     <input type="submit" name="login" value="Log in"/>
-    <input type="submit" name="return" value="Return"/>
+    <input type="submit" name="return" value="Return" formnovalidate/>
   </form>
   {% endif %}
 </body>
