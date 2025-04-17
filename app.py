@@ -29,13 +29,11 @@ def index():
 
 @app.route("/find_item")
 def find_item():
-    query = request.args.get("query")
-    if query:
-        results = items.find_item(query)
-    else:
-        query = ""
-        results = []
-    return render_template("find_item.html", query=query, results=results)
+    query = request.args.get("query", "")
+    status = request.args.get("status", "")
+    location = request.args.get("location", "")
+    results = items.find_item(query, status, location)
+    return render_template("find_item.html", query=query, status=status, location=location, results=results)
 
 @app.route("/new_item")
 def new_item():

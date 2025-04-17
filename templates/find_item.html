@@ -11,12 +11,26 @@
         <p>
             Keyword: <input type="text" name="query" value="{{ query }}"/>
         </p>
+        <p>
+            <input type="radio" name="status" value="Lost" {% if status == "Lost" %}checked{% endif %}/> Lost
+            <input type="radio" name="status" value="Found" {% if status == "Found" %}checked{% endif %}/> Found
+        </p>
+        <p>
+            Location:
+            <select name="location">
+                <option value="">(select)</option>
+                <option value="City Centre Campus" {% if location == "City Centre Campus" %}selected{% endif %}>City Centre Campus</option>
+                <option value="Kumpula Campus" {% if location == "Kumpula Campus" %}selected{% endif %}>Kumpula Campus</option>
+                <option value="Meilahti Campus" {% if location == "Meilahti Campus" %}selected{% endif %}>Meilahti Campus</option>
+                <option value="Viikki Campus" {% if location == "Viikki Campus" %}selected{% endif %}>Viikki Campus</option>
+            </select>
+        </p>
         <input type="submit" value="Search"/>
         <p>
         </p>
-        <li> <a href="/">Return</a></li>
+        <li> <a href="/">Back</a></li>
     </form>
-    {% if query %}
+    {% if query or status or location %}
     <h2>Tulokset:</h2>
     
     <ul>

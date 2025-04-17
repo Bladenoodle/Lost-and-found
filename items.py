@@ -53,13 +53,31 @@ def remove_item(item_id):
     sql = "DELETE FROM items WHERE id = ?"
     db.execute(sql, [item_id])
 
-def find_item(query):
-    sql = """SELECT id, item_name, status
-            FROM  items
-            WHERE item_name LIKE ? OR description LIKE ?
-            ORDER BY id DESC"""
+def find_item(query, status, location):
+    sql = """
+        SELECT DISTINCT items.id, items.item_name, items.status
+        FROM items
+        LEFT JOIN item_classes ON items.id = item_classes.item_id
+        WHERE 1=1
+    """
+    parameters = []
 
-    return db.query(sql, ["%" + query + "%", "%" + query + "%"])
+    if query:
+        sql += " AND (items.item_name LIKE ? OR items.description LIKE ?)"
+        parameters += ["%" + query + "%", "%" + query + "%"]
+
+    if status:
+        sql += " AND items.status = ?"
+        parameters.append(status)
+
+    if location:
+        sql += " AND item_classes.item_class_name = 'Where' AND item_classes.value = ?"
+        parameters.append(location)
+
+    sql += " ORDER BY items.id DESC"
+
+    return db.query(sql, parameters)
+
 
 def get_all_classes():
     sql = "SELECT class_name, value FROM classes ORDER BY id"
