@@ -6,18 +6,25 @@
 
 <body>
     <h1>Images of post: {{ item.item_name }}</h1>
+
+    {% if images %}
+    <form action="/remove_images" method="POST">
+      {% for image in images %}
+      <input type="checkbox" name="image_id" value="{{ image.id }}"/>
+      <img src="/image/{{ image.id }}" />
+      <br/>
+      {% endfor %}
+      <input type="hidden" name="item_id" value="{{ item.id }}"/>
+      <input type="submit" value="Remove chosen images"/>
+    </form>
+    {% endif %}
     <form action="/add_image" method="post" enctype="multipart/form-data">
       <p>
-        Kuva: <input type="file" name="image" accept=".png" />
+        Image: <input type="file" name="image" accept=".png" />
       </p>
       <input type="hidden" name="item_id" value="{{ item.id }}"/>
       <input type="submit" value="Lähetä" />
     </form>
-    {% if images %}
-    {% for image in images %}
-    <img src="/image/{{ image.id }}" />
-    {% endfor %}
-    {% endif %}
     <p>
         <a href="/item/{{ item.id }}"> Home page</a>
     </p>

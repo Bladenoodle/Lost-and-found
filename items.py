@@ -107,3 +107,7 @@ def get_image(image_id):
 def add_image(item_id, image):
     sql = "INSERT INTO images (item_id, image) VALUES(?, ?)"
     db.execute(sql, [item_id, image])
+
+def remove_image(image_id):
+    sql = "DELETE FROM images WHERE id = ?"
+    return db.execute(sql, [image_id])
