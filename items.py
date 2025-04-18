@@ -9,6 +9,7 @@ def add_item(item_name, description, status, user_id, classes, upload_time, edit
     sql = "INSERT INTO item_classes (item_id, item_class_name, value) VALUES (?, ?, ?)"
     for item_class_name, value in classes:
         db.execute(sql, [item_id, item_class_name, value])
+    return
 
 def get_items():
     sql = "SELECT id, item_name, status FROM items ORDER BY id DESC"
@@ -39,19 +40,21 @@ def update_item(item_id, item_name, description, status, classes, edit_time):
                         """
     db.execute(sql, [item_name, description, status, edit_time, item_id])
 
-
     sql = "DELETE FROM item_classes WHERE item_id = ?"
     db.execute(sql, [item_id])
 
     sql="INSERT INTO item_classes (item_id, item_class_name, value) VALUES (?, ?, ?)"
     for item_class_name, value in classes:
         db.execute(sql, [item_id, item_class_name, value])
+    return
 
 def remove_item(item_id):
+    sql = "DELETE FROM images WHERE item_id = ?"
+    db.execute(sql, [item_id])
     sql = "DELETE FROM item_classes WHERE item_id = ?"
     db.execute(sql, [item_id])
     sql = "DELETE FROM items WHERE id = ?"
-    db.execute(sql, [item_id])
+    return db.execute(sql, [item_id])
 
 def find_item(query, status, location):
     sql = """
@@ -104,10 +107,16 @@ def get_image(image_id):
     result = db.query(sql, [image_id])
     return result[0][0] if result else None
 
-def add_image(item_id, image):
+def add_image(item_id, image, edit_time):
     sql = "INSERT INTO images (item_id, image) VALUES(?, ?)"
     db.execute(sql, [item_id, image])
 
-def remove_image(image_id):
+    sql = "UPDATE items SET edit_time = ? WHERE id = ?"
+    return db.execute(sql, [edit_time, item_id])
+
+def remove_image(image_id, item_id, edit_time):
     sql = "DELETE FROM images WHERE id = ?"
-    return db.execute(sql, [image_id])
+    db.execute(sql, [image_id])
+
+    sql = "UPDATE items SET edit_time = ? WHERE id = ?"
+    return db.execute(sql, [edit_time, item_id])

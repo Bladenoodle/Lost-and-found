@@ -129,7 +129,9 @@ def add_image():
     if not item_id:
         abort(403)
 
-    items.add_image(item_id, image)
+    edit_time = int(time.time())
+    items.add_image(item_id, image, edit_time)
+
     return redirect("/edit_images/" + str(item_id))
 
 @app.route("/remove_images", methods=["POST"])
@@ -142,8 +144,9 @@ def remove_image():
     if item["user_id"] != session["user_id"]:
         abort(403)
 
+    edit_time = int(time.time())
     for image_id in request.form.getlist("image_id"):
-        items.remove_image(image_id)
+        items.remove_image(image_id, item_id, edit_time)
     return redirect("/edit_images/" + str(item_id))
 
 @app.route("/edit_item/<int:item_id>")
