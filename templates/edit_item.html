@@ -5,15 +5,11 @@
 </head>
 
 <body>
-    <h1>Edit item</h1>
+  <h1>Edit item</h1>
   <form action="/update_item" method="POST">
     <p>
       Item name: <br/>
       <input type="text" name="item_name", value="{{ item.item_name }}" maxlength="50" required/>
-    </p>
-    <p>
-      Description:<br/>
-      <textarea name="description" rows="8", cols="60" maxlength="1000" required>{{ item.description }}</textarea>
     </p>
     <p>
       Lost or found<br/>
@@ -35,9 +31,12 @@
         {% endfor %}
       </select>
     </p>
-    {% endfor %}
+    <p>
+      Description:<br/>
+      <textarea name="description" rows="8", cols="60" maxlength="1000" required>{{ item.description }}</textarea>
+    </p>
     <input type="submit" name="save" value="Save"/>
-    <input type="submit" name="return" value="Return" formnovalidate/>
+    <input type="submit" name="return" value="Cancel" formnovalidate/>
   </form>
 </body>
 

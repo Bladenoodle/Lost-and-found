@@ -16,8 +16,14 @@
     {% if session.user_id == item.user_id %}
     <p>
         <a href="/edit_item/{{ item.id }}">Edit</a>
+        <a href="/edit_images/{{ item.id }}">Images</a>
         <a href="/remove_item/{{ item.id }}">Remove</a>
     </p>
+    {% endif %}
+    {% if images %}
+    {% for image in images %}
+    <img src="/image/{{ image.id }}" />
+    {% endfor %}
     {% endif %}
     <p>
         Description:

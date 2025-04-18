@@ -1,0 +1,26 @@
+<html>
+
+<head>
+  <title>Images of post: {{ item.item_name }}</title>
+</head>
+
+<body>
+    <h1>Images of post: {{ item.item_name }}</h1>
+    <form action="/add_image" method="post" enctype="multipart/form-data">
+      <p>
+        Kuva: <input type="file" name="image" accept=".png" />
+      </p>
+      <input type="hidden" name="item_id" value="{{ item.id }}"/>
+      <input type="submit" value="Lähetä" />
+    </form>
+    {% if images %}
+    {% for image in images %}
+    <img src="/image/{{ image.id }}" />
+    {% endfor %}
+    {% endif %}
+    <p>
+        <a href="/item/{{ item.id }}"> Home page</a>
+    </p>
+</body>
+
+</html>
