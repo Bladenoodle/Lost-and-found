@@ -1,10 +1,8 @@
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Find item</title>
-</head>
+{% block title %}Keskustelu{% endblock %}
 
-<body>
+{% block content %}
     <h1>Find item</h1>
 
     <form action="/find_item" method="GET">
@@ -26,9 +24,6 @@
             </select>
         </p>
         <input type="submit" value="Search"/>
-        <p>
-        </p>
-        <li> <a href="/">Back</a></li>
     </form>
     {% if query or status or location %}
     <h2>Tulokset:</h2>
@@ -38,8 +33,5 @@
         <li> <a href="/item/{{ item.id }}">{{ item.item_name }}({{ item.status }})</a></li>
         {% endfor %}
     </ul>
-    
     {% endif %}
-</body>
-
-</html>
+{% endblock %}

@@ -1,10 +1,8 @@
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Edit item</title>
-</head>
+{% block title %}Keskustelu{% endblock %}
 
-<body>
+{% block content %}
   <h1>Edit item</h1>
   <form action="/update_item" method="POST">
     <p>
@@ -39,6 +37,4 @@
     <input type="submit" name="save" value="Save"/>
     <input type="submit" name="return" value="Cancel" formnovalidate/>
   </form>
-</body>
-
-</html>
+{% endblock %}

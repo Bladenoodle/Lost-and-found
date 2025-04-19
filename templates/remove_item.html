@@ -1,21 +1,17 @@
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Remove item</title>
-</head>
+{% block title %}Keskustelu{% endblock %}
 
-<body>
-    <h1>Remove item</h1>
-    <p>
-        Item name: <b>{{ item.item_name }}</b>
-    </p>
-    <p>
-        Are you sure you want to <b>remove this item permanently</b>?
-    </p>
-  <form action="/remove_item/{{ item.id }}" method="POST">
-    <input type="submit" name="remove" value="Confirm">
-    <input type="submit" name="return" value="Cancel">
-  </form>
-</body>
-
-</html>
+{% block content %}
+  <h1>Remove item</h1>
+  <p>
+      Item name: <b>{{ item.item_name }}</b>
+  </p>
+  <p>
+      Are you sure you want to <b>remove this item permanently</b>?
+  </p>
+<form action="/remove_item/{{ item.id }}" method="POST">
+  <input type="submit" name="remove" value="Confirm">
+  <input type="submit" name="return" value="Cancel">
+</form>
+{% endblock %}

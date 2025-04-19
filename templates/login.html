@@ -1,18 +1,8 @@
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Log in</title>
-</head>
+{% block title %}Keskustelu{% endblock %}
 
-<body>
-  {% if session.username %}
-  <p>
-    You are logged in as {{ session.username }}
-  </p>
-  <p>
-    <a href="/logout"> Log out</a>
-  </p>
-  {% else %}
+{% block content %}
   <form action="/login" method="POST">
     <p>
       Username: <br/>
@@ -23,9 +13,5 @@
       <input type="password" name="password" required/>
     </p>
     <input type="submit" name="login" value="Log in"/>
-    <input type="submit" name="return" value="Return" formnovalidate/>
   </form>
-  {% endif %}
-</body>
-
-</html>
+  {% endblock %}

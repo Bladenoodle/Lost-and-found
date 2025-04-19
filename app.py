@@ -44,34 +44,32 @@ def new_item():
 @app.route("/create_item", methods=["POST"])
 def create_item():
     require_login()
-    if "return" in request.form:
-        return redirect("/")
-    if "add" in request.form:
-        item_name = request.form["item_name"]
-        limit_length(item_name, 50)
-        description = request.form["description"]
-        limit_length(description, 1000)
-        status = request.form["status"]
-        user_id = session["user_id"]
+    item_name = request.form["item_name"]
+    limit_length(item_name, 50)
+    description = request.form["description"]
+    limit_length(description, 1000)
+    status = request.form["status"]
+    user_id = session["user_id"]
 
-        all_classes = items.get_all_classes()
+    all_classes = items.get_all_classes()
 
-        classes = []
-        for entry in request.form.getlist("classes"):
-            if entry:
-                parts = entry.split(":")
-                if parts[0] not in all_classes:
-                    abort(403)
-                if parts[1] not in all_classes[parts[0]]:
-                    abort(403)
-                classes.append((parts[0], parts[1]))
+    classes = []
+    for entry in request.form.getlist("classes"):
+        if entry:
+            parts = entry.split(":")
+            if parts[0] not in all_classes:
+                abort(403)
+            if parts[1] not in all_classes[parts[0]]:
+                abort(403)
+            classes.append((parts[0], parts[1]))
 
-        upload_time = int(time.time())
-        edit_time = upload_time
-
+    upload_time = int(time.time())
+    edit_time = upload_time
+    try:
         items.add_item(item_name, description, status, user_id, classes, upload_time, edit_time)
-
-        return redirect("/")
+    except sqlite3.IntegrityError:
+        return render_template("reject.html", item=True)
+    return redirect("/")
 
 @app.route("/item/<int:item_id>")
 def show_item(item_id):
@@ -112,27 +110,31 @@ def add_image():
     require_login()
     item_id = request.form["item_id"]
     item = items.get_item(item_id)
-    file = request.files["image"]
-
     if not item:
         abort(404)
     if item["user_id"] != session["user_id"]:
         abort(403)
-    if not file.filename.endswith(".png"):
-        return "VIRHE: väärä tiedostomuoto"
 
-    image = file.read()
-    if len(image) > 100 * 1024:
-        return "VIRHE: liian suuri kuva"
+    if "return" in request.form:
+        return redirect("/item/" + str(item_id))
 
-    item_id = request.form["item_id"]
-    if not item_id:
-        abort(403)
+    if "send" in request.form:
+        file = request.files["image"]
+        if not file.filename.endswith(".png"):
+            return "VIRHE: väärä tiedostomuoto"
 
-    edit_time = int(time.time())
-    items.add_image(item_id, image, edit_time)
+        image = file.read()
+        if len(image) > 100 * 1024:
+            return "VIRHE: liian suuri kuva"
 
-    return redirect("/edit_images/" + str(item_id))
+        item_id = request.form["item_id"]
+        if not item_id:
+            abort(403)
+
+        edit_time = int(time.time())
+        items.add_image(item_id, image, edit_time)
+
+        return redirect("/edit_images/" + str(item_id))
 
 @app.route("/remove_images", methods=["POST"])
 def remove_image():
@@ -286,46 +288,39 @@ def register():
 
 @app.route("/create", methods = ["POST"])
 def create():
-    if "return" in request.form:
+    username = request.form["username"]
+    limit_length(username, 30)
+    password1 = request.form["password1"]
+    limit_length(password1, 50)
+    password2 = request.form["password2"]
+    limit_length(password2, 50)
+    if password1 != password2:
+        return render_template("reject.html", password=True)
+    try:
+        users.create_user(username, password1)
+        user_id = users.check_login(username, password1)
+        session["user_id"] = user_id
+        session["username"] = username
         return redirect("/")
-    if "signup" in request.form:
-        username = request.form["username"]
-        limit_length(username, 30)
-        password1 = request.form["password1"]
-        limit_length(password1, 50)
-        password2 = request.form["password2"]
-        limit_length(password2, 50)
-        if password1 != password2:
-            return render_template("reject.html", password=True)
-        try:
-            users.create_user(username, password1)
-            user_id = users.check_login(username, password1)
-            session["user_id"] = user_id
-            session["username"] = username
-            return redirect("/")
-        except sqlite3.IntegrityError:
-            return render_template("reject.html", username=True)
+    except sqlite3.IntegrityError:
+        return render_template("reject.html", username=True)
 
 @app.route("/login", methods = ["GET", "POST"])
 def login():
     if request.method == "GET":
         return render_template("login.html")
 
-    if request.method == "POST":
-        if "return" in request.form:
-            return redirect("/")
-        if "login" in request.form:
-            username = request.form["username"]
-            password = request.form["password"]
+    username = request.form["username"]
+    password = request.form["password"]
 
-            user_id = users.check_login(username, password)
+    user_id = users.check_login(username, password)
 
-            if user_id:
-                session["user_id"] = user_id
-                session["username"] = username
-                return redirect("/")
-            else:
-                return render_template("reject.html", login=True)
+    if user_id:
+        session["user_id"] = user_id
+        session["username"] = username
+        return redirect("/")
+    else:
+        return render_template("reject.html", login=True)
 
 @app.route("/logout")
 def logout():

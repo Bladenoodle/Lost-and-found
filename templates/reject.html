@@ -1,26 +1,26 @@
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Error: Invalid username or password</title>
-</head>
+{% block title %}Keskustelu{% endblock %}
+
+{% block content %}
+
 {% if username == True %}
-<body>
     <h1>Error: Username is occupied</h1>
-    <a href="/register"> Return</a>
+    <a href="/register"> Back</a>
 {% endif %}
 
 {% if password == True %}
-<body>
     <h1>Error: Passwords did not match</h1>
-    <a href="/register"> Return</a>
+    <a href="/register"> Back</a>
 {% endif %}
-</body>
 
 {% if login == True %}
-<body>
     <h1>Error: Invalid username or password</h1>
-    <a href="/login"> Return</a>
+    <a href="/login"> Back</a>
 {% endif %}
-</body>
 
-</html>
+{% if item == True %}
+    <h1>Error: Item name is occupied</h1>
+    <a href="/new_item"> Back</a>
+{% endif %}
+{% endblock %}

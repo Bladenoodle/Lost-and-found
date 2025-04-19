@@ -1,28 +1,8 @@
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Lost and found</title>
-</head>
+{% block title %}Keskustelu{% endblock %}
 
-<body>
-    <h1>Lost and found</h1>
-  {% if session.user_id %}
-  <p>
-    You are logged in as {{ session.username }}
-  </p>
-  {% endif %}
-  <p>
-    {% if session.user_id %}
-    <a href="/new_item">New item</a>|
-    <a href="/logout">Log out</a>|
-    {% else %}
-    <a href="/login"> Log in</a>|
-    <a href="/register"> Sign up</a>|
-    {% endif %}
-    <a href="/find_item"> Find item</a>
-  </p>
-
-
+{% block content %}
   <h2> Posts </h2>
   <ul>
     {%for item in items%}
@@ -31,6 +11,6 @@
     </li>
     {% endfor %}
   </ul>
-</body>
+{% endblock %}
 
 </html>

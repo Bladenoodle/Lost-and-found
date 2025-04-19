@@ -1,10 +1,8 @@
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Replace claim</title>
-</head>
+{% block title %}Keskustelu{% endblock %}
 
-<body>
+{% block content %}
     <h1>You can only have one request per item</h1>
     <p>
         This is your previous request: "{{ old_claim.contact_info }}"
@@ -17,6 +15,4 @@
     <input type="submit" name="replace" value="Replace"/>
     <input type="submit" name="return" value="Cancel"/>
   </form>
-</body>
-
-</html>
+{% endblock %}
