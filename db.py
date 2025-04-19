@@ -10,15 +10,14 @@ def get_connection():
 def execute(sql, params=[]):
     con = get_connection()
     try:
-        result = con.execute(sql, params)
+        cursor = con.execute(sql, params)
         con.commit()
+        return cursor
     except sqlite3.OperationalError as e:
         print("SQLite OperationalError:", e)
+        return None
     finally:
-        con.close() 
-
-def last_insert_id():
-    return getattr(g, "last_insert_id", None)
+        con.close()
 
 def query(sql, params=[]):
     con = get_connection()

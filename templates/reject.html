@@ -23,4 +23,9 @@
     <h2>Error: Item name is occupied</h2>
     <a href="/new_item"> Back</a>
 {% endif %}
+
+{% if edit_item == True %}
+    <h2>Error: Item name is occupied</h2>
+    <a href="/edit_item/{{ item_id }}"> Back</a>
+{% endif %}
 {% endblock %}

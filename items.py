@@ -2,14 +2,16 @@ import db
 
 def add_item(item_name, description, status, user_id, classes, upload_time, edit_time):
     sql = "INSERT INTO items (item_name, description, status, user_id, upload_time, edit_time) VALUES (?, ?, ?, ?, ?, ?)"
-    db.execute(sql, [item_name, description, status, user_id, upload_time, edit_time])
+    cursor = db.execute(sql, [item_name, description, status, user_id, upload_time, edit_time])
 
-    item_id = db.last_insert_id()
+    item_id = cursor.lastrowid
 
     sql = "INSERT INTO item_classes (item_id, item_class_name, value) VALUES (?, ?, ?)"
     for item_class_name, value in classes:
         db.execute(sql, [item_id, item_class_name, value])
-    return
+
+    return item_id
+
 
 def get_items():
     sql = """

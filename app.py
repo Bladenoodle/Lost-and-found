@@ -66,10 +66,11 @@ def create_item():
     upload_time = int(time.time())
     edit_time = upload_time
     try:
-        items.add_item(item_name, description, status, user_id, classes, upload_time, edit_time)
+        item_id = items.add_item(item_name, description, status, user_id, classes, upload_time, edit_time)
+        return redirect("/item/" + str(item_id))
     except sqlite3.IntegrityError:
         return render_template("reject.html", item=True)
-    return redirect("/")
+
 
 @app.route("/item/<int:item_id>")
 def show_item(item_id):
@@ -201,9 +202,11 @@ def update_item():
                 classes.append((parts[0], parts[1]))
 
         edit_time = int(time.time())
-        items.update_item(item_id, item_name, description, status, classes, edit_time)
-
-        return redirect("/item/" + str(item_id))
+        try:
+            items.update_item(item_id, item_name, description, status, classes, edit_time)
+            return redirect("/item/" + str(item_id))
+        except sqlite3.IntegrityError:
+            return render_template("reject.html", item_id=item_id, edit_item=True)
 
 @app.route("/remove_item/<int:item_id>", methods=["GET", "POST"])
 def remove_item(item_id):
