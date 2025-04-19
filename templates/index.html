@@ -1,31 +1,28 @@
 <html>
 
 <head>
-  <title>Log in</title>
+  <title>Lost and found</title>
 </head>
 
 <body>
-    <h1> Welcome to Lost and found!</h1>
-  {% if session.username %}
+    <h1>Lost and found</h1>
+  {% if session.user_id %}
   <p>
-    You are logged in as {{ session.username }} with id: {{ session.user_id }}
+    You are logged in as {{ session.username }}
   </p>
+  {% endif %}
   <p>
-    <a href="/new_item">New item</a> <a href="/find_item"> Find item</a>
-  </p>
-  <p>
-    <a href="/logout">Log out</a>
-  </p>
-  {% else %}
-  <p> 
-    <a href="/login"> Log in</a>
-    <a href="/register"> Sign up</a>
-  </p>
-  <p>
+    {% if session.user_id %}
+    <a href="/new_item">New item</a>|
+    <a href="/logout">Log out</a>|
+    {% else %}
+    <a href="/login"> Log in</a>|
+    <a href="/register"> Sign up</a>|
+    {% endif %}
     <a href="/find_item"> Find item</a>
   </p>
 
-    {% endif %}
+
   <h2> Posts </h2>
   <ul>
     {%for item in items%}
