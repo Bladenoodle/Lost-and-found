@@ -3,7 +3,7 @@
 {% block title %}Keskustelu{% endblock %}
 
 {% block content %}
-    <h1>Find item</h1>
+    <h2>Find item</h2>
 
     <form action="/find_item" method="GET">
         <p>
@@ -26,7 +26,7 @@
         <input type="submit" value="Search"/>
     </form>
     {% if query or status or location %}
-    <h2>Tulokset:</h2>
+    <h3>Results:</h3>
     
     <ul>
         {% for item in results %}

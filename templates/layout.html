@@ -8,12 +8,10 @@
 <body>
     <h1>Lost and found</h1>
   {% if session.user_id %}
-  <p>
-    You are logged in as <a href="/user/{{ session.user_id }}">{{ session.username }}</a>
-  </p>
+    <h4>You are logged in as: <a href="/user/{{ session.user_id }}">{{ session.username }}</a></h4>
   {% endif %}
   <p>
-    <a href="/"> Front page</a> |
+    <a href="/"> Posts</a> |
     {% if session.user_id %}
     <a href="/new_item">New item</a> |
     <a href="/logout">Log out</a> |

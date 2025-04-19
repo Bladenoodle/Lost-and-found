@@ -5,22 +5,22 @@
 {% block content %}
 
 {% if username == True %}
-    <h1>Error: Username is occupied</h1>
+    <h2>Error: Username is occupied</h2>
     <a href="/register"> Back</a>
 {% endif %}
 
 {% if password == True %}
-    <h1>Error: Passwords did not match</h1>
+    <h2>Error: Passwords did not match</h2>
     <a href="/register"> Back</a>
 {% endif %}
 
 {% if login == True %}
-    <h1>Error: Invalid username or password</h1>
+    <h2>Error: Invalid username or password</h2>
     <a href="/login"> Back</a>
 {% endif %}
 
 {% if item == True %}
-    <h1>Error: Item name is occupied</h1>
+    <h2>Error: Item name is occupied</h2>
     <a href="/new_item"> Back</a>
 {% endif %}
 {% endblock %}

@@ -3,7 +3,7 @@
 {% block title %}Keskustelu{% endblock %}
 
 {% block content %}
-  <h1>Images of post: {{ item.item_name }}</h1>
+  <h2>Images of post: {{ item.item_name }}</h2>
 
   {% if images %}
   <form action="/remove_images" method="POST">
