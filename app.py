@@ -121,11 +121,11 @@ def add_image():
     if "send" in request.form:
         file = request.files["image"]
         if not file.filename.endswith(".png"):
-            return "VIRHE: väärä tiedostomuoto"
+            return "Error: invalid file type"
 
         image = file.read()
-        if len(image) > 100 * 1024:
-            return "VIRHE: liian suuri kuva"
+        if len(image) > 512 * 512:
+            return "Error: image too large"
 
         item_id = request.form["item_id"]
         if not item_id:

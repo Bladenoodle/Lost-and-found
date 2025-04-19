@@ -12,7 +12,24 @@ def add_item(item_name, description, status, user_id, classes, upload_time, edit
     return
 
 def get_items():
-    sql = "SELECT id, item_name, status FROM items ORDER BY id DESC"
+    sql = """
+    SELECT items.id,
+           items.item_name,
+           items.status,
+           items.upload_time,
+           items.edit_time,
+           users.id AS user_id,
+           users.username AS uploader,
+           (SELECT classes.value
+            FROM item_classes
+            JOIN classes ON item_classes.value = classes.value
+            WHERE item_classes.item_id = items.id
+              AND classes.class_name = 'Where'
+            LIMIT 1) AS location
+    FROM items
+    LEFT JOIN users ON items.user_id = users.id
+    ORDER BY items.id DESC
+    """
     return db.query(sql)
 
 def get_item(item_id):
