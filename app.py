@@ -1,10 +1,11 @@
+import sqlite3
+import secrets
 from flask import Flask
 from flask import flash, make_response, abort, redirect, render_template, request, session
 import config
 import items
 import users
 import claims
-import sqlite3
 import time
 
 app = Flask(__name__)
@@ -20,6 +21,12 @@ def require_login():
 
 def limit_length(string, maxlength):
     if len(string)>maxlength or len(string) == 0:
+        abort(403)
+
+def check_csrf():
+    if "csrf_token" not in request.form:
+        abort(403)
+    if request.form["csrf_token"] != session["csrf_token"]:
         abort(403)
 
 @app.route("/")
@@ -44,6 +51,7 @@ def new_item():
 @app.route("/create_item", methods=["POST"])
 def create_item():
     require_login()
+    check_csrf()
     item_name = request.form["item_name"]
     limit_length(item_name, 50)
     description = request.form["description"]
@@ -110,6 +118,7 @@ def edit_images(item_id):
 @app.route("/add_image", methods=["POST"])
 def add_image():
     require_login()
+    check_csrf()
     item_id = request.form["item_id"]
     item = items.get_item(item_id)
     if not item:
@@ -141,6 +150,7 @@ def add_image():
 @app.route("/remove_images", methods=["POST"])
 def remove_image():
     require_login()
+    check_csrf()
     item_id = request.form["item_id"]
     item = items.get_item(item_id)
     if not item:
@@ -173,6 +183,7 @@ def edit_item(item_id):
 @app.route("/update_item", methods=["POST"])
 def update_item():
     require_login()
+    check_csrf()
     item_id = request.form["item_id"]
     item = items.get_item(item_id)
     if not item:
@@ -223,6 +234,7 @@ def remove_item(item_id):
         return render_template("remove_item.html", item=item)
 
     if request.method == "POST":
+        check_csrf()
         if "remove" in request.form:
             items.remove_item(item_id)
             return redirect("/")
@@ -232,7 +244,7 @@ def remove_item(item_id):
 @app.route("/create_claim", methods=["POST"])
 def create_claim():
     require_login()
-
+    check_csrf()
     contact_info = request.form["contact_info"]
     limit_length(contact_info, 100)
     item_id = request.form["item_id"]
@@ -251,6 +263,7 @@ def create_claim():
 @app.route("/remove_claim/<int:claim_id>", methods=["POST"])
 def remove_claim(claim_id):
     require_login()
+    check_csrf()
     claim = claims.get_claim_by_id(claim_id)
     if not claim:
         abort(404)
@@ -264,6 +277,7 @@ def remove_claim(claim_id):
 @app.route("/replace_claim/<int:claim_id>", methods=["POST"])
 def replace_claim(claim_id):
     require_login()
+    check_csrf()
     claim = claims.get_claim_by_id(claim_id)
     if not claim:
         abort(404)
@@ -325,6 +339,7 @@ def login():
     if user_id:
         session["user_id"] = user_id
         session["username"] = username
+        session["csrf_token"] = secrets.token_hex(16)
         return redirect("/")
     else:
         flash("Error: Invalid username or password")

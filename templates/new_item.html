@@ -30,6 +30,7 @@
       <textarea name="description" rows="8", cols="60" maxlength="1000" required></textarea>
     </p>
     <p>(You can add images in the item page after uploading this post)</p>
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     <input type="submit" name="add" value="Add item"/>
   </form>
 {% endblock %}

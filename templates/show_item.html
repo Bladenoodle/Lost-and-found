@@ -56,6 +56,7 @@
         </li>
         <p></p>
         <form action="/remove_claim/{{ claim.id }}" method="POST">
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
             <input type="submit" value="Remove"/>
         </form>
         {% endif %}
@@ -65,6 +66,7 @@
     <form action="/create_claim" method="POST">
         Contact info:
         <input type="text" name="contact_info" size="30" required maxlength="100"/>
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
         <input type="hidden" name="item_id" value="{{ item.id }}"/>
         <input type="submit" value="Send"/>
     </form>

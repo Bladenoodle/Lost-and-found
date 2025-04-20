@@ -11,6 +11,7 @@
       Are you sure you want to <b>remove this item permanently</b>?
   </p>
 <form action="/remove_item/{{ item.id }}" method="POST">
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
   <input type="submit" name="remove" value="Confirm">
   <input type="submit" name="return" value="Cancel">
 </form>

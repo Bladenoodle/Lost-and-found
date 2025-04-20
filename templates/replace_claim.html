@@ -12,6 +12,7 @@
     </p>
   <form action="/replace_claim/{{ old_claim.id }}" method="POST">
     <input type="hidden" name="contact_info" value="{{ contact_info }}"/>
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     <input type="submit" name="replace" value="Replace"/>
     <input type="submit" name="return" value="Cancel"/>
   </form>
