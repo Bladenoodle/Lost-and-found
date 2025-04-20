@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import make_response, abort, redirect, render_template, request, session
+from flask import flash, make_response, abort, redirect, render_template, request, session
 import config
 import items
 import users
@@ -69,7 +69,8 @@ def create_item():
         item_id = items.add_item(item_name, description, status, user_id, classes, upload_time, edit_time)
         return redirect("/item/" + str(item_id))
     except sqlite3.IntegrityError:
-        return render_template("reject.html", item=True)
+            flash("Error: Item name is occupied")
+            return redirect("/new_item")
 
 
 @app.route("/item/<int:item_id>")
@@ -206,7 +207,8 @@ def update_item():
             items.update_item(item_id, item_name, description, status, classes, edit_time)
             return redirect("/item/" + str(item_id))
         except sqlite3.IntegrityError:
-            return render_template("reject.html", item_id=item_id, edit_item=True)
+            flash("Error: Item name is occupied")
+            return redirect("/edit_item/" + str(item_id))
 
 @app.route("/remove_item/<int:item_id>", methods=["GET", "POST"])
 def remove_item(item_id):
@@ -298,7 +300,8 @@ def create():
     password2 = request.form["password2"]
     limit_length(password2, 50)
     if password1 != password2:
-        return render_template("reject.html", password=True)
+        flash("Error: Passwords did not match")
+        return redirect("/register")
     try:
         users.create_user(username, password1)
         user_id = users.check_login(username, password1)
@@ -306,7 +309,8 @@ def create():
         session["username"] = username
         return redirect("/")
     except sqlite3.IntegrityError:
-        return render_template("reject.html", username=True)
+        flash("Username is occupied")
+        return redirect("/register")
 
 @app.route("/login", methods = ["GET", "POST"])
 def login():
@@ -323,7 +327,8 @@ def login():
         session["username"] = username
         return redirect("/")
     else:
-        return render_template("reject.html", login=True)
+        flash("Error: Invalid username or password")
+        return redirect("/login")
 
 @app.route("/logout")
 def logout():

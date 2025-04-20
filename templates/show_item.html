@@ -23,12 +23,6 @@
     <img src="/image/{{ image.id }}" />
     {% endfor %}
     {% endif %}
-    <p>
-       <b>Description:</b>
-    </p>
-    <p>
-        {{ item.description }}
-    </p>
     {% if classes %}
     <p>
         When & Where:
@@ -39,6 +33,12 @@
         </ul>
     </p>
     {% endif %}
+    <p>
+       <b>Description:</b>
+    </p>
+    <p>
+        {{ item.description }}
+    </p>
     {% if session.user_id == item.user_id %}
         {% if all_claims %}
         <h3>Claim requests</h3>
