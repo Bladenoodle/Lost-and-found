@@ -68,6 +68,8 @@ def update_item(item_id, item_name, description, status, classes, edit_time):
     return
 
 def remove_item(item_id):
+    sql = "DELETE FROM claims WHERE item_id = ?"
+    db.execute(sql, [item_id])
     sql = "DELETE FROM images WHERE item_id = ?"
     db.execute(sql, [item_id])
     sql = "DELETE FROM item_classes WHERE item_id = ?"
