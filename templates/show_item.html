@@ -37,7 +37,7 @@
        <b>Description:</b>
     </p>
     <p>
-        {{ item.description }}
+        {{ item.description | show_lines }}
     </p>
     {% if session.user_id == item.user_id %}
         {% if all_claims %}
