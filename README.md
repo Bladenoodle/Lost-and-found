@@ -18,7 +18,6 @@ With Lost and Found, hopefully no student has to suffer the frustration of perma
 * Users can view their own and others' profiles, including post counts and a list of linked posts.
 * Users can select categories when creating or editing a post. (Categories include the campus where the item was lost/found and when was the item lost/found.)
 * Users can make claim requests on others' posts and view incoming requests on their own posts.
-* 
 # Installation
 - Move to directory lost-and-found:
 ```
