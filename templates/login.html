@@ -5,6 +5,11 @@
 {% block content %}
   <h2>Log in</h2>
   <form action="/login" method="POST">
+    {% if next_page %}
+    <input type="hidden" name="next_page" value="{{ next_page }}" />
+    {% else %}
+    <input type="hidden" name="next_page" value="/" />
+    {% endif %}
     <p>
       <label for="username">Username:</label><br/>
       <input type="text" id="username" name="username" required/>

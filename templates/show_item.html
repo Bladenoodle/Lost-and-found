@@ -70,6 +70,11 @@
         <input type="hidden" name="item_id" value="{{ item.id }}"/>
         <input type="submit" value="Send"/>
     </form>
+    {% else %}
+    <p>
+        You can only make a claim when you are <a href="/login">logged in</a></br>.
+        Don't have an account? <a href="/register">Sign up</a>!
+    </p>
     {% endif %}
     {% endif %}
     <p>

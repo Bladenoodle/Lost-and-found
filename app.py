@@ -343,7 +343,7 @@ def show_user(user_id):
 
 @app.route("/register")
 def register():
-    return render_template("register.html")
+    return render_template("register.html", next_page=request.referrer)
 
 @app.route("/create", methods = ["POST"])
 def create():
@@ -353,36 +353,37 @@ def create():
     limit_length(password1, 50)
     password2 = request.form["password2"]
     limit_length(password2, 50)
+    next_page = request.form["next_page"]
     if password1 != password2:
         flash("Error: Passwords did not match")
-        return redirect("/register")
+        return redirect("/register", next_page)
     try:
         users.create_user(username, password1)
         user_id = users.check_login(username, password1)
         session["user_id"] = user_id
         session["username"] = username
-        return redirect("/")
+        return redirect(next_page)
     except sqlite3.IntegrityError:
         flash("Username is occupied")
-        return redirect("/register")
+        return redirect("/register",next_page=next_page)
 
-@app.route("/login", methods = ["GET", "POST"])
+@app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "GET":
-        return render_template("login.html")
+        return render_template("login.html", next_page=request.referrer)
 
     username = request.form["username"]
     password = request.form["password"]
 
     user_id = users.check_login(username, password)
-
+    next_page = request.form["next_page"]
     if user_id:
         session["user_id"] = user_id
         session["username"] = username
         session["csrf_token"] = secrets.token_hex(16)
-        return redirect("/")
+        return redirect(next_page)
     flash("Error: Invalid username or password")
-    return redirect("/login")
+    return redirect("/login", next_page=next_page)
 
 @app.route("/logout")
 def logout():
