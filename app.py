@@ -1,8 +1,8 @@
 import time
+import math
 import sqlite3
 import secrets
-from flask import Flask
-from flask import flash, make_response, abort, redirect, render_template, request, session
+from flask import Flask, flash, make_response, abort, redirect, render_template, request, session, g
 import markupsafe
 import config
 import items
@@ -37,10 +37,39 @@ def check_csrf():
     if request.form["csrf_token"] != session["csrf_token"]:
         abort(403)
 
+@app.before_request
+def before_request():
+    g.start_time = time.time()
+
 @app.route("/")
-def index():
-    all_items = items.get_items()
-    return render_template("index.html", items=all_items)
+@app.route("/<int:page>")
+def index(page=1):
+    page_size = 10
+    item_count = items.get_item_count()
+    page_count = math.ceil(item_count / page_size)
+    page_count = max(page_count, 1)
+
+    if page < 1:
+        return redirect("/1")
+    if page > page_count:
+        return redirect("/" + str(page_count))
+
+    page_items = items.get_items(page, page_size)
+    return render_template("index.html", page=page, page_count=page_count, items=page_items)
+
+@app.after_request
+def after_request(response):
+    elapsed_time = round(time.time() - g.start_time, 2)
+    print("elapsed time:", elapsed_time, "s")
+    return response
+
+@app.route("/go_to", methods=["POST"])
+def go_to():
+    destination = request.form["page"]
+    if int(destination) <= int(request.form["page_count"]):
+        return redirect("/"+ str(destination))
+    else:
+        abort(404)
 
 @app.route("/find_item")
 def find_item():

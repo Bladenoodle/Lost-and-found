@@ -13,8 +13,12 @@ def add_item(item_name, description, status, user_id, classes, upload_time, edit
 
     return item_id
 
+def get_item_count():
+    sql = "SELECT COUNT(id) AS count FROM items"
+    result = db.query(sql)
+    return result[0]["count"] if result else 0
 
-def get_items():
+def get_items(page, page_size):
     sql = """
     SELECT items.id,
            items.item_name,
@@ -32,8 +36,11 @@ def get_items():
     FROM items
     LEFT JOIN users ON items.user_id = users.id
     ORDER BY items.id DESC
+    LIMIT ? OFFSET ?
     """
-    return db.query(sql)
+    limit = page_size
+    offset = page_size * (page - 1)
+    return db.query(sql, [limit, offset])
 
 def get_item(item_id):
     sql = """SELECT items.id,

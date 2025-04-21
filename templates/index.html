@@ -18,4 +18,16 @@
     </div>
   </div>
   {% endfor %}
+  <p>
+    <a href="/{{ page - 1 }}">&lt;&lt;</a>
+    Page {{ page }}/{{ page_count }}
+    <a href="/{{ page + 1 }}">&gt;&gt;</a></br>
+    <form action="/go_to" method="POST">
+      <label for="page">Page:</label>
+      <input type="hidden" name="page_count" value="{{ page_count }}"/>
+      <input type="text" id="page" name="page" value="{{ page }}"/>
+      <input type="submit" value="Go to"/>
+    </form>
+  </p>
+  <hr />
 {% endblock %}
