@@ -8,8 +8,9 @@
   {% if images %}
   <form action="/remove_images" method="POST">
     {% for image in images %}
-    <input type="checkbox" name="image_id" value="{{ image.id }}"/>
-    <img src="/image/{{ image.id }}" alt="Item image"/>
+    <input type="checkbox" id="image_check" name="image_id" value="{{ image.id }}"/>
+    <label for="image_check"><img src="/image/{{ image.id }}" alt="Item image"/></label>
+
     <br/>
     {% endfor %}
     <input type="hidden" name="item_id" value="{{ item.id }}"/>
@@ -19,7 +20,8 @@
   {% endif %}
   <form action="/add_image" method="post" enctype="multipart/form-data">
     <p>
-      Image: <input type="file" name="image" accept=".png" />
+      <label for="image">Image:</label>
+      <input type="file" id="image" name="image" accept=".png" />
     </p>
     <input type="hidden" name="item_id" value="{{ item.id }}"/>
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />

@@ -3,35 +3,38 @@
 {% block title %}Keskustelu{% endblock %}
 
 {% block content %}
-    <h2>Find item</h2>
+  <h2>Find item</h2>
+  <form action="/find_item" method="GET">
+    <p>
+      <label for="query">Keyword:</label>
+      <input type="text" id="query" name="query" value="{{ query }}"/>
+    </p>
+    <p>
+      <label>Lost or found:</label><br/>
+      <input type="radio" id="lost" name="status" value="Lost" {% if status == "Lost" %}checked{% endif %}/>
+      <label for="lost">Lost</label>
+      <input type="radio" id="found" name="status" value="Found" {% if status == "Found" %}checked{% endif %}/>
+      <label for="found">Found</label>
+    </p>
+    <p>
+      <label for="location">Location:</label>
+      <select id="location" name="location">
+        <option value="">(select)</option>
+        <option value="City Centre Campus" {% if location == "City Centre Campus" %}selected{% endif %}>City Centre Campus</option>
+        <option value="Kumpula Campus" {% if location == "Kumpula Campus" %}selected{% endif %}>Kumpula Campus</option>
+        <option value="Meilahti Campus" {% if location == "Meilahti Campus" %}selected{% endif %}>Meilahti Campus</option>
+        <option value="Viikki Campus" {% if location == "Viikki Campus" %}selected{% endif %}>Viikki Campus</option>
+      </select>
+    </p>
+    <input type="submit" value="Search"/>
+  </form>
 
-    <form action="/find_item" method="GET">
-        <p>
-            Keyword: <input type="text" name="query" value="{{ query }}"/>
-        </p>
-        <p>
-            <input type="radio" name="status" value="Lost" {% if status == "Lost" %}checked{% endif %}/> Lost
-            <input type="radio" name="status" value="Found" {% if status == "Found" %}checked{% endif %}/> Found
-        </p>
-        <p>
-            Location:
-            <select name="location">
-                <option value="">(select)</option>
-                <option value="City Centre Campus" {% if location == "City Centre Campus" %}selected{% endif %}>City Centre Campus</option>
-                <option value="Kumpula Campus" {% if location == "Kumpula Campus" %}selected{% endif %}>Kumpula Campus</option>
-                <option value="Meilahti Campus" {% if location == "Meilahti Campus" %}selected{% endif %}>Meilahti Campus</option>
-                <option value="Viikki Campus" {% if location == "Viikki Campus" %}selected{% endif %}>Viikki Campus</option>
-            </select>
-        </p>
-        <input type="submit" value="Search"/>
-    </form>
-    {% if query or status or location %}
+  {% if query or status or location %}
     <h3>Results:</h3>
-    
     <ul>
-        {% for item in results %}
-        <li> <a href="/item/{{ item.id }}">{{ item.item_name }}({{ item.status }})</a></li>
-        {% endfor %}
+      {% for item in results %}
+        <li><a href="/item/{{ item.id }}">{{ item.item_name }} ({{ item.status }})</a></li>
+      {% endfor %}
     </ul>
-    {% endif %}
+  {% endif %}
 {% endblock %}

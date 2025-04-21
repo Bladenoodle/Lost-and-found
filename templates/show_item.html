@@ -64,8 +64,8 @@
     {% if session.user_id %}
     <h3>Make a claim request</h3>
     <form action="/create_claim" method="POST">
-        Contact info:
-        <input type="text" name="contact_info" size="30" required maxlength="100"/>
+        <label for="contact_info">Contact info:</label>
+        <input type="text" id="contact_info" name="contact_info" size="30" required maxlength="100"/>
         <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
         <input type="hidden" name="item_id" value="{{ item.id }}"/>
         <input type="submit" value="Send"/>

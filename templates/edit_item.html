@@ -6,33 +6,35 @@
   <h2>Edit item</h2>
   <form action="/update_item" method="POST">
     <p>
-      Item name: <br/>
-      <input type="text" name="item_name", value="{{ item.item_name }}" maxlength="50" required/>
+      <label for="item_name">Item name:</label><br/>
+      <input type="text" id="item_name" name="item_name" value="{{ item.item_name }}" maxlength="50" required/>
     </p>
     <p>
-      Lost or found<br/>
-      <input type="radio" name="status" value="Lost" {% if item.status == "Lost" %} checked {% endif %} required/> Lost
-      <input type="radio" name="status" value="Found" {% if item.status == "Found" %} checked {% endif %}/> Found
+      <label>Lost or found:</label><br/>
+      <input type="radio" id="lost" name="status" value="Lost" {% if item.status == "Lost" %}checked{% endif %} required/>
+      <label for="lost">Lost</label>
+      <input type="radio" id="found" name="status" value="Found" {% if item.status == "Found" %}checked{% endif %}/>
+      <label for="found">Found</label>
     </p>
     <input type="hidden" name="item_id" value="{{ item.id }}"/>
     {% for class in all_classes %}
     <p>
-      {{ class }}:<br/>
-      <select name="classes">
+      <label for="{{ class }}">{{ class }}:</label><br/>
+      <select id="{{ class }}" name="classes">
         <option value="">(select)</option>
         {% for option in all_classes[class] %}
-        {% if item_classes[class] == option %}
-        <option value="{{ class }}:{{ option }}" selected>{{ option }}</option>
-        {% else %}
-        <option value="{{ class }}:{{ option }}">{{ option }}</option>
-        {% endif %}
+          {% if item_classes[class] == option %}
+            <option value="{{ class }}:{{ option }}" selected>{{ option }}</option>
+          {% else %}
+            <option value="{{ class }}:{{ option }}">{{ option }}</option>
+          {% endif %}
         {% endfor %}
       </select>
-      {% endfor %}
     </p>
+    {% endfor %}
     <p>
-      Description:<br/>
-      <textarea name="description" rows="8" cols="60" maxlength="1000" required>{{ item.description }}</textarea>
+      <label for="description">Description:</label><br/>
+      <textarea id="description" name="description" rows="8" cols="60" maxlength="1000" required>{{ item.description }}</textarea>
     </p>
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     <input type="submit" name="save" value="Save"/>
