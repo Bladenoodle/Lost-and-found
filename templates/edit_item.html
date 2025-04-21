@@ -32,7 +32,7 @@
     </p>
     <p>
       Description:<br/>
-      <textarea name="description" rows="8", cols="60" maxlength="1000" required>{{ item.description | show_lines }}</textarea>
+      <textarea name="description" rows="8" cols="60" maxlength="1000" required>{{ item.description }}</textarea>
     </p>
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     <input type="submit" name="save" value="Save"/>

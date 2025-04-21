@@ -1,7 +1,8 @@
 import db
 
 def add_item(item_name, description, status, user_id, classes, upload_time, edit_time):
-    sql = "INSERT INTO items (item_name, description, status, user_id, upload_time, edit_time) VALUES (?, ?, ?, ?, ?, ?)"
+    sql = """INSERT INTO items (item_name, description, status, user_id, upload_time, edit_time)
+             VALUES (?, ?, ?, ?, ?, ?)"""
     cursor = db.execute(sql, [item_name, description, status, user_id, upload_time, edit_time])
 
     item_id = cursor.lastrowid
@@ -65,7 +66,6 @@ def update_item(item_id, item_name, description, status, classes, edit_time):
     sql="INSERT INTO item_classes (item_id, item_class_name, value) VALUES (?, ?, ?)"
     for item_class_name, value in classes:
         db.execute(sql, [item_id, item_class_name, value])
-    return
 
 def remove_item(item_id):
     sql = "DELETE FROM claims WHERE item_id = ?"

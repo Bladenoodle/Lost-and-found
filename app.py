@@ -1,13 +1,13 @@
+import time
 import sqlite3
 import secrets
 from flask import Flask
 from flask import flash, make_response, abort, redirect, render_template, request, session
+import markupsafe
 import config
 import items
 import users
 import claims
-import time
-import markupsafe
 
 
 app = Flask(__name__)
@@ -48,7 +48,8 @@ def find_item():
     status = request.args.get("status", "")
     location = request.args.get("location", "")
     results = items.find_item(query, status, location)
-    return render_template("find_item.html", query=query, status=status, location=location, results=results)
+    return render_template("find_item.html", query=query, status=status, location=location,
+                            results=results)
 
 @app.route("/new_item")
 def new_item():
@@ -82,11 +83,12 @@ def create_item():
     upload_time = int(time.time())
     edit_time = upload_time
     try:
-        item_id = items.add_item(item_name, description, status, user_id, classes, upload_time, edit_time)
+        item_id = items.add_item(item_name, description, status, user_id, classes,
+                                upload_time, edit_time)
         return redirect("/item/" + str(item_id))
     except sqlite3.IntegrityError:
-            flash("Error: Item name is occupied")
-            return redirect("/new_item")
+        flash("Error: Item name is occupied")
+        return redirect("/new_item")
 
 
 @app.route("/item/<int:item_id>")
@@ -98,7 +100,8 @@ def show_item(item_id):
     classes = items.get_classes(item_id)
     images = items.get_images(item_id)
 
-    return render_template("show_item.html", item=item, classes=classes, all_claims=all_claims, images=images)
+    return render_template("show_item.html", item=item, classes=classes,
+                            all_claims=all_claims, images=images)
 
 @app.route("/image/<int:image_id>")
 def show_image(image_id):
@@ -154,6 +157,7 @@ def add_image():
         items.add_image(item_id, image, edit_time)
 
         return redirect("/edit_images/" + str(item_id))
+    return
 
 @app.route("/remove_images", methods=["POST"])
 def remove_image():
@@ -186,7 +190,8 @@ def edit_item(item_id):
         item_classes[item_class] = ""
     for entry in items.get_classes(item_id):
         item_classes[entry["item_class_name"]] = entry["value"]
-    return render_template("edit_item.html", item=item, all_classes=all_classes, item_classes=item_classes)
+    return render_template("edit_item.html", item=item, all_classes=all_classes,
+                            item_classes=item_classes)
 
 @app.route("/update_item", methods=["POST"])
 def update_item():
@@ -246,8 +251,7 @@ def remove_item(item_id):
         if "remove" in request.form:
             items.remove_item(item_id)
             return redirect("/")
-        else:
-            return redirect("/item/" + str(item_id))
+        return redirect("/item/" + str(item_id))
 
 @app.route("/create_claim", methods=["POST"])
 def create_claim():
@@ -264,9 +268,8 @@ def create_claim():
     if claims.get_claim_by_user(item_id, user_id):
         old_claim = claims.get_claim_by_user(item_id, user_id)
         return render_template("replace_claim.html", old_claim=old_claim, contact_info=contact_info)
-    else:
-        claims.add_claim(item_id, user_id, contact_info)
-        return redirect("/item/" + str(item_id))
+    claims.add_claim(item_id, user_id, contact_info)
+    return redirect("/item/" + str(item_id))
 
 @app.route("/remove_claim/<int:claim_id>", methods=["POST"])
 def remove_claim(claim_id):
@@ -306,8 +309,8 @@ def show_user(user_id):
     user = users.get_user(user_id)
     if not user:
         abort(404)
-    items = users.get_items(user_id)
-    return render_template("show_user.html", user=user, items=items)
+    user_items = users.get_items(user_id)
+    return render_template("show_user.html", user=user, items=user_items)
 
 @app.route("/register")
 def register():
@@ -349,9 +352,8 @@ def login():
         session["username"] = username
         session["csrf_token"] = secrets.token_hex(16)
         return redirect("/")
-    else:
-        flash("Error: Invalid username or password")
-        return redirect("/login")
+    flash("Error: Invalid username or password")
+    return redirect("/login")
 
 @app.route("/logout")
 def logout():
