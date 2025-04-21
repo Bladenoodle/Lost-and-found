@@ -1,34 +1,57 @@
 # Lost and found
 
-* The user can create an account and log into the application.
-* The user can add information about found or lost items to the application.
-* The user can view both the items they have added and the items added by other users.
-* The user can search for item posts with keywords.
-* The user can view their own and other user's profiles for the amount of posts they have uploaded and a list of links to the posts.
-* The user can select categories while making/editing a post. (categories include the campus where the item is lost/found and the date when it was lost/found.
-* The user can make claim requests in other user's posts and view requests on their own posts.
+# Description
+Everyone’s had that moment — you forget something on campus, rush back, and... it’s gone. That’s where Lost and Found comes in!
 
+This app is designed for University of Helsinki students who have lost or found items on any campus. Users can post about missing or discovered items and connect with others to help return belongings to their owners.
+
+With Lost and Found, hopefully no student has to suffer the frustration of permanently losing their stuff at uni!
+
+
+# Features
+* Users can create an account and log into the application.
+* Users can add posts about lost or found items.
+* Users can edit or delete their own posts.
+* Users can add or remove images in their own posts.
+* Users can view both their own posts and those made by others.
+* Users can search for item posts using keywords, location, and status(found or lost).
+* Users can view their own and others' profiles, including post counts and a list of linked posts.
+* Users can select categories when creating or editing a post. (Categories include the campus where the item was lost/found and when was the item lost/found.)
+* Users can make claim requests on others' posts and view incoming requests on their own posts.
+* 
 # Installation
 - Move to directory lost-and-found:
-  > cd lost-and-found
+```
+cd lost-and-found
+```
 - Create python workspace and enter:
-  > python3 -m venv venv
-
-  > source venv/bin/activate (if windows: source venv/Scripts/activate)
+```
+python3 -m venv venv
+```
+Linux/MacOS:
+```
+source venv/bin/activate
+```
+Windows:
+```
+source venv/Scripts/activate
+```
 - Install flask:
-  > pip install flask
-- Update init.sql:
-  > python3 date_generator.py
+```
+pip install flask
+```
 - Create & setup database.db:
-  > sqlite3 database.db < init.sql
-  
-  > sqlite3 database.db < schema.sql
-  
-  > cat > config.py
-  
-     > secret_key = (any secret key of your choice e.g.      "18fd24bf6a2ad4dac04a33963db1c42f")
+```
+sqlite3 database.db < init.sql
+sqlite3 database.db < schema.sql
+```
+```
+cat > config.py
+ > secret_key = (any secret key of your choice e.g. "18fd24bf6a2ad4dac04a33963db1c42f")
+```
 - run application with:
-  > flask run
-
+```
+flask run
+```
 
   
