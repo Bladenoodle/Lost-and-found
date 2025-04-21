@@ -52,5 +52,43 @@ cat > config.py
 ```
 flask run
 ```
+# Application performance test with large data sets
 
+I simulated a large dataset using a [`seed.py`](seed.py) script included in the repository. The test aimed to evaluate how the application performs with a large number of items and whether optimizations were needed.
+
+## Initial test
+**Parameters:**
+* `user_count = 1000`
+* `item_count = 10⁵`
+* `message_count = 10⁶`
+
+**Result:**
+Index page load time was **over a second**
+
+## Optimizations done:
+
+- added **pagination** on the index page
   
+- improved database indexing
+
+## Tests after optimization:
+
+### Test 1
+**Parameters:**
+* `user_count = 1000`
+* `item_count = 10⁵`
+* `message_count = 10⁶`
+
+**Result:**
+Index page load time was **under 0.1 seconds**
+(20 randomly selected pages)
+
+### Test 2
+**Parameters:**
+* `user_count = 1000`
+* `item_count = 10⁶`
+* `message_count = 10⁷`
+
+**Result:**
+Index page load time was **under 0.1 seconds**
+(20 randomly selected pages)
