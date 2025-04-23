@@ -41,8 +41,8 @@ pip install flask
 ```
 - Create & setup database.db:
 ```
-sqlite3 database.db < init.sql
 sqlite3 database.db < schema.sql
+sqlite3 database.db < init.sql
 ```
 ```
 cat > config.py
