@@ -37,10 +37,6 @@ def check_csrf():
     if request.form["csrf_token"] != session["csrf_token"]:
         abort(403)
 
-@app.before_request
-def before_request():
-    g.start_time = time.time()
-
 @app.route("/")
 @app.route("/<int:page>")
 def index(page=1):
@@ -56,12 +52,6 @@ def index(page=1):
 
     page_items = items.get_items(page, page_size)
     return render_template("index.html", page=page, page_count=page_count, items=page_items)
-
-@app.after_request
-def after_request(response):
-    elapsed_time = round(time.time() - g.start_time, 2)
-    print("elapsed time:", elapsed_time, "s")
-    return response
 
 @app.route("/go_to", methods=["POST"])
 def go_to():
@@ -362,6 +352,7 @@ def create():
         user_id = users.check_login(username, password1)
         session["user_id"] = user_id
         session["username"] = username
+        session["csrf_token"] = secrets.token_hex(16)
         return redirect(next_page)
     except sqlite3.IntegrityError:
         flash("Username is occupied")
